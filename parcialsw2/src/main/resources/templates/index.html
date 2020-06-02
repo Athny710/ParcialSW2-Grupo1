@@ -8,7 +8,7 @@
         <!-- Main Content -->
         <div id="content">
             <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
-
+            <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
               <div class="container-fluid">
                   <!-- Page Heading -->
                 <div class="d-flex col-lg-12">
