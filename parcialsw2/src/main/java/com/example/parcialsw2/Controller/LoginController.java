@@ -1,5 +1,7 @@
 package com.example.parcialsw2.Controller;
 
+import com.example.parcialsw2.entity.Usuario;
+import com.example.parcialsw2.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,16 +27,16 @@ public class LoginController {
         for(GrantedAuthority role : auth.getAuthorities()){
             rol = role.getAuthority();
         }
-        if(rol.equalsIgnoreCase("administrador")){
-            Usuarios usuarioLogueado = usuarioRepository.findByCorreo(auth.getName());
+        if(rol.equalsIgnoreCase("admin")){
+            Usuario usuarioLogueado = usuarioRepository.findByCorreo(auth.getName());
             session.setAttribute("user",usuarioLogueado);
             return "redirect:/admin";
-        }else if (rol.equalsIgnoreCase("sede")){
-            Usuarios usuarioLogueado = usuarioRepository.findByCorreo(auth.getName());
+        }else if (rol.equalsIgnoreCase("registrado")){
+            Usuario usuarioLogueado = usuarioRepository.findByCorreo(auth.getName());
             session.setAttribute("user",usuarioLogueado);
-            return "redirect:/sede";
+            return "redirect:/registrado";
         }else if (rol.equalsIgnoreCase("gestor")){
-            Usuarios usuarioLogueado = usuarioRepository.findByCorreo(auth.getName());
+            Usuario usuarioLogueado = usuarioRepository.findByCorreo(auth.getName());
             session.setAttribute("user",usuarioLogueado);
             return "redirect:/gestor";
         }else {

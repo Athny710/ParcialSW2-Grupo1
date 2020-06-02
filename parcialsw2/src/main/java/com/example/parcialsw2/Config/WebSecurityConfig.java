@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/loginForm").loginProcessingUrl("/processLogin")
                 .usernameParameter("correo")
-                .passwordParameter("password")
+                .passwordParameter("contrasenha")
                 .defaultSuccessUrl("/redirectByRole",true);
         http.logout().logoutUrl("/cerrar").logoutSuccessUrl("/").deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
