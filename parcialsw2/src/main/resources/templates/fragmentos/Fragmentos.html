@@ -27,11 +27,8 @@
     </button>
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
-
-
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/}">Lista de productos</a>
+            <a class="nav-link" th:href="@{/inicio}">Lista de productos</a>
         </li>
         <li sec:authorize="hasAnyAuthority('admin')" class="nav-item">
             <a class="nav-link" th:href="@{/admin}">Lista de gestores</a>
@@ -52,8 +49,6 @@
         <li sec:authorize="hasAnyAuthority('registrado')" class="nav-item">
             <a class="nav-link" th:href="@{/registrado/pedidos}">Lista de pedidos</a>
         </li>
-
-
 
 
 
@@ -115,7 +110,6 @@
 
     <div th:if="${session.user} == null" sec:authorize="isAnonymous()" id="usuarioAnonimo" class="row">
         <div><a class="btn btn-info" th:href="@{/loginForm}">Iniciar Sesión</a></div>
-        <div><a class="btn btn-info" th:href="@{/loginForm}">Registrarse</a></div>
     </div>
     <div th:if="${session.user} != null" sec:authorize="isAuthenticated()" id="usuarioAutenticado" class="row">
         <div><span th:text="|Bienvenido ${session.user.nombre} ${session.user.apellido} (${session.user.rol})|"></span></div>
