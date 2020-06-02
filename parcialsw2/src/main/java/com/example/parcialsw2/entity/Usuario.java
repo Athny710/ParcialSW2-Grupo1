@@ -18,11 +18,16 @@ public class Usuario implements Serializable {
     @NotBlank
     @Size(max=45, message = "Demasiados caracteres")
     private String nombre;
+    @NotBlank
     private String apellido;
+    @NotBlank
     private String dni;
+    @NotBlank
     private String correo;
     private String contrasenha;
+    @Column(nullable = false)
     private String rol;
+    @Column(nullable = false)
     private int activo;
 
 

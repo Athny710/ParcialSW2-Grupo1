@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:insert="Fragmentos :: cabecera(Crear-Gestor)">
+<head th:replace="fragmentos/Fragmentos.html::cabecera(titulo='Crear Gestor')">
 </head>
 <body>
-<nav th:insert="Fragmentos :: TopBar"></nav>
 
 <div class="container" id="contenido">
+    <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
+    <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
     <br>
     <br>
-    <h3>Crear Gestor</h3>
+    <h3>Actualizar Gestor</h3>
     <br>
     <form method="post" th:action="@{/admin/guardar}" th:object="${usuario}">
-        <input th:value="*{idusuarios}" name="employee_id" type="hidden"/>
+        <input th:value="*{idusuarios}" name="idusuarios" type="hidden"/>
         <div class="row">
             <div class="form-group col-6">
                 <label>Nombre </label>
@@ -27,12 +28,8 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-6">
-                <label>DNI</label>
-                <input th:field="*{dni}"  type="text" class="form-control" >
-                <div class="text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" ></div>
-            </div>
-
+            <div><input th:field="*{dni}"  type="hidden" class="form-control" >
+                <div class="text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" ></div></div>
             <div class="form-group col-6">
                 <label>Correo</label>
                 <input th:field="*{correo}" type="text" class="form-control" >
@@ -43,5 +40,6 @@
         <button type="submit" class="btn btn-primary" th:text="${usuario.idusuarios == 0 ? 'Registrar': 'Actualizar'}">Guardar</button>
     </form>
 </div>
+<div th:replace="fragmentos/Fragmentos.html::Script"></div>
 </body>
 </html>
