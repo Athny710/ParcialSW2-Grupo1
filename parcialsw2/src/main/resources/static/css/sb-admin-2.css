@@ -90,7 +90,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
 }
 
 abbr[title],
@@ -2212,11 +2212,7 @@ textarea.form-control {
     margin-bottom: 0;
   }
 }
-.btn-green{
-  color: #fff;
-  background-color: #4fbbc9;
-  border-color: #4fbbc9;
-}
+
 .btn {
   display: inline-block;
   font-weight: 400;
@@ -2259,6 +2255,11 @@ textarea.form-control {
 a.btn.disabled,
 fieldset:disabled a.btn {
   pointer-events: none;
+}
+.btn-green{
+  color: #fff;
+  background-color: #f01720;
+  border-color: #f01720;
 }
 
 .btn-primary {
