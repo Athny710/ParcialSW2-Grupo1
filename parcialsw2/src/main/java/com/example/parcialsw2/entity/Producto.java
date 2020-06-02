@@ -1,5 +1,6 @@
 package com.example.parcialsw2.entity;
 
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,6 +11,7 @@ public class Producto {
 
     @Id
     private int idproducto;
+
     private String nombre;
     private String descripcion;
     private Double precio;
