@@ -101,7 +101,7 @@ public class GestorController {
 
             }
 
-            return "redirect:/gestor/list";
+            return "redirect:/list";
         }
     }
 

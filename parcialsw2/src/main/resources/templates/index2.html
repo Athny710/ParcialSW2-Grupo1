@@ -10,8 +10,8 @@
         <div id="content">
             <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
             <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
-              <div class="container-fluid">
-                  <!-- Page Heading -->
+            <div class="container-fluid">
+                <!-- Page Heading -->
                 <div class="d-flex col-lg-12">
                     <div class="col-lg-4"></div>
                     <form class="form-inline mr-auto w-100 navbar-search center">
@@ -27,8 +27,8 @@
                 </div>
                 <br><br>
                 <div class="row" th:each="x,i:${lista}">
-                    <div class="col-lg-6" >
-                        <div class="d-flex" th:object="${lista[i.index+i.index]}">
+                    <div class="col-lg-6" th:if="${i.index<4}">
+                        <div class="d-flex">
                             <div class="col-lg-1"></div>
                             <!-- Basic Card Example -->
                             <div class="card shadow mb-4 col-lg-10">
@@ -36,28 +36,28 @@
                                     <div class="d-flex">
                                         <div class="col-lg-6">
                                             <br>
-                                            <img th:src="@{|${session.user.rol}/image/${x.idproducto}|}" width="135px" height="135px">
+                                            <img th:src="@{|image/${x.idproducto}|}" width="135px" height="135px">
                                         </div>
                                         <div class="col-lg-10">
                                             <div class="row">
                                                 <p>Código:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${lista[i.index+i.index].nombre}"></p>
+                                                <p th:text="${x.nombre}"></p>
                                             </div>
                                             <div class="row">
                                                 <p>Nombre:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:field="${lista[i.index+i.index].nombre}"></p>
+                                                <p th:text="${x.nombre}"></p>
                                             </div>
                                             <div class="row">
                                                 <p>Precio:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${lista[i.index+i.index].precio}"></p>
+                                                <p th:text="${x.precio}"></p>
                                             </div>
                                             <div class="row">
                                                 <p>Stock:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${lista[i.index+i.index].stock}"></p>
+                                                <p th:text="${x.stock}"></p>
                                             </div>
                                             <a href="#">+Ver más</a>
                                             <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
@@ -79,7 +79,7 @@
                             <div class="col-lg-1"></div>
                         </div>
                     </div>
-                    <div class="col-lg-6" th:object="${lista[i.index+i.index+1]}">
+                    <div class="col-lg-6" th:if="${i.index>2}">
                         <div class="d-flex">
                             <div class="col-lg-1"></div>
                             <!-- Basic Card Example -->
@@ -94,22 +94,22 @@
                                             <div class="row">
                                                 <p>Código:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${lista[i.index+i.index+1].nombre}"></p>
+                                                <p th:text="${x.nombre}"></p>
                                             </div>
                                             <div class="row">
                                                 <p>Nombre:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${lista[i.index+i.index+1].nombre}"></p>
+                                                <p th:text="${x.nombre}"></p>
                                             </div>
                                             <div class="row">
                                                 <p>Precio:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${lista[i.index+i.index+1].precio}"></p>
+                                                <p th:text="${x.precio}"></p>
                                             </div>
                                             <div class="row">
                                                 <p>Stock:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${lista[i.index+i.index+1].stock}"></p>
+                                                <p th:text="${x.stock}"></p>
                                             </div>
                                             <a href="#">+Ver más</a>
                                             <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
