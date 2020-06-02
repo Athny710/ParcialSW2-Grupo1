@@ -1,11 +1,11 @@
 package com.example.parcialsw2.entity;
 
-import org.hibernate.annotations.BatchSize;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
@@ -14,12 +14,13 @@ public class Producto {
 
     @Id
     private int idproducto;
+    @NotBlank
     private String nombre;
     private String descripcion;
     private Double precio;
     private String fotonombre;
     private String fotocontenttype;
-    private String foto;
+    private byte[] foto;
     private int stock;
 
 
@@ -71,13 +72,7 @@ public class Producto {
         this.fotocontenttype = fotocontenttype;
     }
 
-    public String getFoto() {
-        return foto;
-    }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
 
     public int getStock() {
         return stock;
@@ -85,5 +80,13 @@ public class Producto {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 }
