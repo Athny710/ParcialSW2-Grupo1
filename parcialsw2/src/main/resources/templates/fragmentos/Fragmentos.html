@@ -41,7 +41,7 @@
             <a class="nav-link" th:href="@{/admin}">Lista de gestores</a>
         </li>
         <li sec:authorize="hasAnyAuthority('admin')" class="nav-item">
-            <a class="nav-link" th:href="@{/adminnuevo}">Registra un gestor</a>
+            <a class="nav-link" th:href="@{/admin/nuevo}">Registra un gestor</a>
         </li>
         <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item">
             <a class="nav-link" th:href="@{/gestor/nuevo}">Registrar Producto</a>
@@ -61,7 +61,7 @@
 
         <!-- Nav Item - Alerts -->
         <li sec:authorize="hasAnyAuthority('registrado')" class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" th:href="@{/registrado/carrito}" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" th:href="@{/templates/registrado/carrito}" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-shopping-cart text-white"></i>
                 <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter">3+</span>
@@ -112,8 +112,6 @@
 
         <!-- Nav Item - User Information -->
     </ul>
-
-
 
     <div th:if="${session.user} == null" sec:authorize="isAnonymous()" id="usuarioAnonimo" class="row">
         <div><a class="btn btn-info" th:href="@{/loginForm}">Iniciar Sesión</a></div>

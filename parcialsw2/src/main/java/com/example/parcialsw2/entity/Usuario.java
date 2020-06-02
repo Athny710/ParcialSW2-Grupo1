@@ -1,10 +1,11 @@
 package com.example.parcialsw2.entity;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -13,12 +14,20 @@ public class Usuario implements Serializable {
 
     @Id
     private int idusuarios;
+    @Column(nullable = false)
+    @NotBlank
+    @Size(max=45, message = "Demasiados caracteres")
     private String nombre;
+    @NotBlank
     private String apellido;
+    @NotBlank
     private String dni;
+    @NotBlank
     private String correo;
     private String contrasenha;
+    @Column(nullable = false)
     private String rol;
+    @Column(nullable = false)
     private int activo;
 
 

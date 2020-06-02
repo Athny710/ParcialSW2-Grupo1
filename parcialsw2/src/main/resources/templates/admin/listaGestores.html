@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragmentos/Fragmentos.html::cabecera(titulo='Listar Gestor')">
+</head>
+<body>
+
+
+<div class="container" id="contenido">
+    <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
+    <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
+    <h1>Lista de Gestores</h1>
+    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="gestor, info : ${listaGestores}">
+            <td th:text="${info.index + 1}"></td>
+            <td th:text="${gestor.nombre}"></td>
+            <td th:text="${gestor.apellido}"></td>
+            <td th:text="${gestor.correo}"></td>
+            <td><a class="btn btn-primary"
+                   th:href="@{'/admin/editar' + '?id=' + ${gestor.idusuarios}}">Editar</a>
+            </td>
+            <td><a class="btn btn-danger" th:href="@{'/admin/borrar' + '?id=' + ${gestor.idusuarios}}">Borrar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="fragmentos/Fragmentos.html::Script"></div>
+</body>
+</html>
