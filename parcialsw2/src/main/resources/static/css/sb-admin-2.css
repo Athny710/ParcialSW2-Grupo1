@@ -2212,7 +2212,11 @@ textarea.form-control {
     margin-bottom: 0;
   }
 }
-
+.btn-green{
+  color: #fff;
+  background-color: #4fbbc9;
+  border-color: #4fbbc9;
+}
 .btn {
   display: inline-block;
   font-weight: 400;
