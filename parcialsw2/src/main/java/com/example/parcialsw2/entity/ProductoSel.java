@@ -3,6 +3,7 @@ package com.example.parcialsw2.entity;
 import org.hibernate.annotations.Tables;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "producto_seleccionado")

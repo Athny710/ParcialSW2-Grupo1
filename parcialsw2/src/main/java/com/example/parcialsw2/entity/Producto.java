@@ -1,9 +1,12 @@
 package com.example.parcialsw2.entity;
 
 
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 @Table(name = "producto")
@@ -11,7 +14,7 @@ public class Producto {
 
     @Id
     private int idproducto;
-
+    @NotBlank
     private String nombre;
     private String descripcion;
     private Double precio;
