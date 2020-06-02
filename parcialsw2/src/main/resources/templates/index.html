@@ -70,7 +70,7 @@
                                             </div>
                                             <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
+                                                <a th:href="@{'/gestor/editar' + '?id=' + ${x.idproducto}}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
