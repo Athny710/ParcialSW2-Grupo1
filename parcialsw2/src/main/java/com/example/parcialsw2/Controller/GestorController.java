@@ -25,7 +25,8 @@ public class GestorController {
     ProductoRepository productoRepository;
 
     @GetMapping(value = {"","/list"})
-    public String paginaInicio(){
+    public String paginaInicio(Model model){
+        model.addAttribute("lista", productoRepository.findAll());
         return "index";
     }
 
