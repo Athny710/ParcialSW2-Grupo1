@@ -20,7 +20,7 @@ public class Producto {
     private Double precio;
     private String fotonombre;
     private String fotocontenttype;
-    private String foto;
+    private byte[] foto;
     private int stock;
 
 
@@ -72,13 +72,7 @@ public class Producto {
         this.fotocontenttype = fotocontenttype;
     }
 
-    public String getFoto() {
-        return foto;
-    }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
 
     public int getStock() {
         return stock;
@@ -86,5 +80,13 @@ public class Producto {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 }

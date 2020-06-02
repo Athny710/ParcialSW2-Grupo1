@@ -15,9 +15,5 @@ public class RegistradoController {
         return "index";
     }
 
-    @GetMapping("/nuevo")
-    public String crear(@ModelAttribute("producto") Producto producto){
 
-        return "Gestor/form";
-    }
 }
