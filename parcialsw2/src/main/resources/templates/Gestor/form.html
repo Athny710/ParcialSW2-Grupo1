@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:replace="fragmentos/Fragmentos.html::cabecera(titulo='Página Principal')">
+</head>
+<body>
+<div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column bg-white">
+        <!-- Main Content -->
+        <div id="content">
+            <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
+            <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div th:if="${msg != null}" th:text="${msg}" class="alert alert-danger" role="alert"></div>
+                <h3>Editar/Crear Producto</h3>
+                <form method="post" th:action="@{/gestor/guardar}" th:object="${producto}" enctype="multipart/form-data">
+                    <input th:value="*{idproducto}" name="idproducto" type="hidden"/>
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" class="form-control col-lg-6" th:field="*{nombre}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción:</label>
+                        <input type="text" class="form-control col-lg-6" th:field="*{descripcion}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" ></div>
+                    </div>
+                    <div th:if="*{idproducto == 0}" class="form-group">
+                        <label>Precio:</label>
+                        <input type="text" class="form-control col-lg-6" th:field="*{precio}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}" ></div>
+                    </div>
+                    <div th:if="*{idproducto == 0}" class="form-group">
+                        <label>Foto:</label>
+                        <input type="file" class="form-control col-lg-6" name="archivo" id="archivo">
+                    </div>
+                    <div class="form-group">
+                        <label>Stock:</label>
+                        <input type="text" class="form-control col-lg-6" th:field="*{stock}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" ></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" th:text="${producto.idproducto == 0 ? 'Registrar': 'Actualizar'}">Guardar</button>
+                    <a class="btn btn-danger" th:href="@{/gestor}">Cancelar</a>
+                </form>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<div th:replace="fragmentos/Fragmentos.html::Script"></div>
+</body>
+</html>

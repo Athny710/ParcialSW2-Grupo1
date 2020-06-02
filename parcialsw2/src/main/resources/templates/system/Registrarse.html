@@ -42,15 +42,27 @@
                                 <br>
                                 <form class="user" method="post" th:action="@{/processLogin}">
                                     <div class="form-group">
+                                        <input type="email" class="form-control form-control-user" id="nombre" name="nombre" aria-describedby="emailHelp" placeholder="Nombre">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control form-control-user" id="apellido" name="apellido" aria-describedby="emailHelp" placeholder="Apellido">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control form-control-user" id="dni" name="dni" aria-describedby="emailHelp" placeholder="DNI">
+                                    </div>
+                                    <div class="form-group">
                                         <input type="email" class="form-control form-control-user" id="correo" name="correo" aria-describedby="emailHelp" placeholder="Correo">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" id="contrasenha" name="contrasenha" placeholder="Contraseña">
+                                        <input type="email" class="form-control form-control-user" id="contraseña" name="contraseña" aria-describedby="emailHelp" placeholder="Contraseña">
                                     </div>
-                                    <h6 th:if="${param.error}" class="text-danger" style="text-align: center; font-size: 0.8rem; padding-bottom: 1rem">Acceso Denegado </h6>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control form-control-user" id="cont2" name="cont2" aria-describedby="emailHelp" placeholder="Contraseña">
+                                    </div>
+
                                     <hr>
                                     <button type="submit" class="btn btn-verde btn-user btn-block">
-                                        Iniciar Sesión
+                                        Registrarse
                                     </button>
                                     <a th:href="@{/inicio}" class="btn btn-green btn-user btn-block">
                                         Regresar
@@ -58,12 +70,6 @@
 
                                 </form>
                                 <hr>
-                                <div class="text-center">
-                                    <a class="small" href="">Recuperar Contraseña</a>
-                                </div>
-                                <div class="text-center">
-                                    <a class="small" href="">Registrarse</a>
-                                </div>
                             </div>
                         </div>
                     </div>

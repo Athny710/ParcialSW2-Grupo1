@@ -2263,6 +2263,12 @@ fieldset:disabled a.btn {
   pointer-events: none;
 }
 
+.btn-verde{
+
+  color: #fff;
+  background-color: #4fbbc9;
+  border-color: #4fbbc9;
+}
 
 .btn-celeste{
   color: #fff;
