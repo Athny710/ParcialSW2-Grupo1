@@ -1,8 +1,12 @@
 package com.example.parcialsw2.entity;
 
+import org.hibernate.annotations.BatchSize;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "producto")

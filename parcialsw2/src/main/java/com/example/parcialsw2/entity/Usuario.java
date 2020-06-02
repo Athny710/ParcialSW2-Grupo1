@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 @Table(name = "usuarios")

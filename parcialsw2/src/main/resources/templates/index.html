@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head th:replace="fragmentos/Fragmentos.html::cabecera(titulo='Página Principal')">
 </head>
 <body>
@@ -45,9 +46,17 @@
                                             <p>Stock:</p>
                                             <a href="#">+Ver más</a>
                                             <br>
-                                            <div class="d-flex">
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="isAnonymous()" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
 
                                         </div>
@@ -72,9 +81,17 @@
                                             <p>Precio:</p>
                                             <p>Stock:</p>
                                             <a href="#">+Ver más</a>
-                                            <div class="d-flex">
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="isAnonymous()" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
@@ -98,9 +115,17 @@
                                             <p>Precio:</p>
                                             <p>Stock:</p>
                                             <a href="#">+Ver más</a>
-                                            <div class="d-flex">
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="isAnonymous()" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
@@ -124,9 +149,17 @@
                                             <p>Precio:</p>
                                             <p>Stock:</p>
                                             <a href="#">+Ver más</a>
-                                            <div class="d-flex">
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="isAnonymous()" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
@@ -152,9 +185,17 @@
                                             <p>Precio:</p>
                                             <p>Stock:</p>
                                             <a href="#">+Ver más</a>
-                                            <div class="d-flex">
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="isAnonymous()" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
@@ -178,9 +219,17 @@
                                             <p>Precio:</p>
                                             <p>Stock:</p>
                                             <a href="#">+Ver más</a>
-                                            <div class="d-flex">
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="isAnonymous()" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
@@ -204,9 +253,17 @@
                                             <p>Precio:</p>
                                             <p>Stock:</p>
                                             <a href="#">+Ver más</a>
-                                            <div class="d-flex">
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="isAnonymous()" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
