@@ -82,7 +82,7 @@ public class GestorController {
 
             }
 
-            return "redirect:/user/list";
+            return "redirect:/gestor/list";
         }
     }
 
