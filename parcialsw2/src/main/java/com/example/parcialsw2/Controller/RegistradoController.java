@@ -123,7 +123,7 @@ public class RegistradoController {
                 int año = fecha.get(Calendar.YEAR);
                 int mes = fecha.get(Calendar.MONTH);
                 int dia = fecha.get(Calendar.DAY_OF_MONTH);
-                int fechaActual = dia + (mes+1) + año ;
+                String fechaActual = dia + "" + (mes+1) + "" +año ;
                 int auto = paraid.size();
                 String codigoGenerado = "PE" + fechaActual + auto;
                 for(ProductoSel pro : carrito){
