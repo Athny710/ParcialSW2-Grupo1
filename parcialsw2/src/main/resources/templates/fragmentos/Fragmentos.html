@@ -71,7 +71,7 @@
             <a class="nav-link" th:href="@{/gestor/nuevo}">Registrar Producto</a>
         </li>
         <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item">
-            <a class="nav-link" th:href="@{/gestor/estadisticas}">Estadísticas</a>
+            <a class="nav-link" th:href="@{/estadisticas}">Estadísticas</a>
         </li>
 
         <li sec:authorize="hasAnyAuthority('registrado')" class="nav-item">
