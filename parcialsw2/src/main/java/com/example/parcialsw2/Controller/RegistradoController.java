@@ -123,8 +123,8 @@ public class RegistradoController {
                 int año = fecha.get(Calendar.YEAR);
                 int mes = fecha.get(Calendar.MONTH);
                 int dia = fecha.get(Calendar.DAY_OF_MONTH);
-                String fechaActual = año + (mes+1) + dia + "";
-                String auto = paraid.size() + "";
+                String fechaActual = dia + (mes+1) + año + ;
+                int auto = paraid.size();
                 String codigoGenerado = "PE" + fechaActual + auto;
                 for(ProductoSel pro : carrito){
                     pro.setComprado(1);
@@ -136,6 +136,7 @@ public class RegistradoController {
                 session.setAttribute("numeroCarrito", cantidadCarrito);
                 return "redirect:/registrado";
             }else if (getCCType(num).equals("MASTER")) {
+
                 attr.addFlashAttribute("msg2", "Compra realizada exitosamente con tarjeta MASTERCARD");
                 return "redirect:/registrado";
             }else{
