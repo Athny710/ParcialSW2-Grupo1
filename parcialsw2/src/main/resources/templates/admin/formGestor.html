@@ -12,8 +12,13 @@
     <br>
     <h3>Crear Gestor</h3>
     <br>
+    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"> </div>
+    <div th:if="${msgError != null}" th:text="${msgError}" class="alert alert-danger" role="alert"> </div>
     <form method="post" th:action="@{/admin/guardar}" th:object="${usuario}">
         <input th:value="*{idusuarios}" name="idusuarios" type="hidden"/>
+        <input th:value="gestor" name="rol" type="hidden"/>
+        <input th:value="1" name="activo" type="hidden"/>
+        <input th:value="1234567899" name="contrasenha" type="hidden"/>
         <div class="row">
             <div class="form-group col-6">
                 <label>Nombre </label>
