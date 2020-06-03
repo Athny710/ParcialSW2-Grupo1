@@ -19,6 +19,7 @@ public class ProductoSel {
     @JoinColumn(name = "idusuarios")
     private Usuario usuario;
     private String codigo;
+    private Integer comprado;
 
 
     public int getIdproductoseleccionado() {
@@ -59,5 +60,13 @@ public class ProductoSel {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public Integer getComprado() {
+        return comprado;
+    }
+
+    public void setComprado(Integer comprado) {
+        this.comprado = comprado;
     }
 }

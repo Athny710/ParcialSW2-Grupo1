@@ -30,7 +30,7 @@
             <img th:src="@{/img/logo.png}" height="50px" width="200px" style="border-radius: 10rem">
         </div>
     </a>
-    <a sec:authorize="hasAnyAuthority('admin')" th:href="@{/admin}">
+    <a sec:authorize="hasAnyAuthority('admin')" th:href="@{/admin/principal}">
         <div class="text-center">
             <img th:src="@{/img/logo.png}" height="50px" width="200px" style="border-radius: 10rem">
         </div>
@@ -85,10 +85,10 @@
 
         <!-- Nav Item - Alerts -->
         <li sec:authorize="hasAnyAuthority('registrado')" class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" th:href="@{/registrado/carrito}" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" th:href="@{/registrado/verCarrito}" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-shopping-cart text-white"></i>
                 <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+                <span class="badge badge-danger badge-counter" th:text="${session.numeroCarrito}"></span>
             </a>
         </li>
 
