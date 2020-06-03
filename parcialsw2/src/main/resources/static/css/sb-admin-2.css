@@ -9806,7 +9806,9 @@ a:focus {
 .text-lg {
   font-size: 1.2rem;
 }
-
+.text-red{
+  color: #f01720 !important;
+}
 .text-gray-100 {
   color: #f8f9fc !important;
 }

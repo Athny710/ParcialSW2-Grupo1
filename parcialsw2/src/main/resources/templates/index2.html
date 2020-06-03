@@ -26,15 +26,8 @@
                     </form>
                 </div>
                 <br><br>
-<<<<<<< HEAD
-=======
                 <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
                 <div th:if="${msg1 != null}" th:text="${msg1}" class="alert alert-danger" role="alert"></div>
-
-                <div class="col-lg-4">
-                    <a class="btn btn-primary btn-user btn-block" th:href="@{/registrado/vistacheck}">Ingresar Gestor</a>
-                </div>
->>>>>>> 497bebd8883dbabdd13c440d4c56f0cb66deb44e
                 <div class="row" th:each="x,i:${lista}">
 
                     <div class="col-lg-6" >
@@ -69,7 +62,7 @@
                                                 <div class="col-lg-1"></div>
                                                 <p th:text="${lista[i.index+i.index].stock}"></p>
                                             </div>
-                                            <a href="#">+Ver más</a>
+                                            <a th:href="@{'/vermas' + '?id=' + ${lista[i.index+i.index].idproducto}}">+Ver más</a>
                                             <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a th:href="@{'/registrado/carrito' + '?id=' + ${lista[i.index+i.index].idproducto}}"  style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
@@ -121,7 +114,7 @@
                                                 <div class="col-lg-1"></div>
                                                 <p th:text="${lista[i.index+i.index+1].stock}"></p>
                                             </div>
-                                            <a href="#">+Ver más</a>
+                                            <a th:href="@{'/vermas' + '?id=' + ${lista[i.index+i.index+1].idproducto}}">+Ver más</a>
                                             <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a th:href="@{'/registrado/carrito' + '?id=' + ${lista[i.index+i.index+1].idproducto}}"  style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
