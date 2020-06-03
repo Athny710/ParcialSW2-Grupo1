@@ -26,9 +26,6 @@
                     </form>
                 </div>
                 <br><br>
-                <div class="col-lg-4">
-                    <a class="btn btn-primary btn-user btn-block" th:href="@{/registrado/vistacheck}">Ingresar Gestor</a>
-                </div>
                 <div class="row" th:each="x,i:${lista}">
                     <div class="col-lg-6" >
                         <div class="d-flex" th:object="${lista[i.index+i.index]}">
