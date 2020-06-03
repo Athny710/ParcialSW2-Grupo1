@@ -108,7 +108,16 @@ public class RegistradoController {
     }
 
     @GetMapping("/vistacheck")
-    public String vistacheck(){
+    public String vistacheck(Model model, HttpSession session){
+
+        Usuario usuario = (Usuario) session.getAttribute("user");
+        List<ProductoSel> carrito = prodSelRepository.NumeroCarrito(usuario.getIdusuarios());
+        double precioTotal = 0;
+        for(ProductoSel pro : carrito){
+            precioTotal = precioTotal + (pro.getCantidad() * pro.getProducto().getPrecio());
+        }
+        model.addAttribute("precioFinal", precioTotal);
+
         return "registrado/checkout";
     }
 
@@ -136,7 +145,6 @@ public class RegistradoController {
                 session.setAttribute("numeroCarrito", cantidadCarrito);
                 return "redirect:/registrado";
             }else if (getCCType(num).equals("MASTER")) {
-
                 attr.addFlashAttribute("msg2", "Compra realizada exitosamente con tarjeta MASTERCARD");
                 return "redirect:/registrado";
             }else{
@@ -236,8 +244,8 @@ public class RegistradoController {
         }else {
             return "redirect:/registrado/verCarrito";
         }
-
-
         }
+
+
 
 }
