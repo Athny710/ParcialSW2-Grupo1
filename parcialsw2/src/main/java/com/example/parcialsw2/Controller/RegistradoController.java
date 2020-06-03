@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,14 +113,31 @@ public class RegistradoController {
     }
 
     @PostMapping("/checkout")
-    public String checkout(@RequestParam("numero") String num, Model model){
+    public String checkout(@RequestParam("numero") String num, Model model,RedirectAttributes attr, HttpSession session){
         if(verificarTarjeta(num)){
             if(getCCType(num).equals("VISA")){
-                model.addAttribute("msg", "tarjeta VISA válida");
-                return "registrado/checkout";
+                Usuario usuario = (Usuario) session.getAttribute("user");
+                List<ProductoSel> carrito = prodSelRepository.NumeroCarrito(usuario.getIdusuarios());
+                List<ProductoSel> paraid = prodSelRepository.findAll();
+                Calendar fecha = new GregorianCalendar();
+                int año = fecha.get(Calendar.YEAR);
+                int mes = fecha.get(Calendar.MONTH);
+                int dia = fecha.get(Calendar.DAY_OF_MONTH);
+                String fechaActual = dia + "" + (mes+1) + ""  + año + "";
+                String auto = paraid.size() + "";
+                String codigoGenerado = "PE" + fechaActual + auto;
+                for(ProductoSel pro : carrito){
+                    pro.setComprado(1);
+                    pro.setCodigo(codigoGenerado);
+                    prodSelRepository.save(pro);
+                }
+                attr.addFlashAttribute("msg2", "Compra realizada exitosamente con tarjeta VISA");
+                int cantidadCarrito = 0;
+                session.setAttribute("numeroCarrito", cantidadCarrito);
+                return "redirect:/registrado";
             }else if (getCCType(num).equals("MASTER")) {
-                model.addAttribute("msg", "tarjeta MASTERCARD valida");
-                return "registrado/checkout";
+                attr.addFlashAttribute("msg2", "Compra realizada exitosamente con tarjeta MASTERCARD");
+                return "redirect:/registrado";
             }else{
                 model.addAttribute("msg", "su tarjeta es valida, pero no es VISA ni MASTERCARD");
                 return "registrado/checkout";
@@ -135,14 +154,13 @@ public class RegistradoController {
         int[] carac2 = new int[15];
         int ultimo = Character.getNumericValue(caracteres[15]);
         int suma=0;
-
         for(int i=0, j=14; i<15; i++, j--){
             carac2[i] = Character.getNumericValue(caracteres[j]);
         }
         for (int i=0; i<15; i++){
             if(i%2==0){ carac2[i]=carac2[i]*2; }
         }
-        for (int i=0; i<14; i++){
+        for (int i=0; i<15; i++){
             if(carac2[i]>9){
                 carac2[i]=carac2[i]-9;
             }
@@ -156,13 +174,12 @@ public class RegistradoController {
         System.out.println(suma);
         if(10-(suma%10)==ultimo){
             return true;
-        }else if(suma%10==ultimo){
+        }else if(suma%10 == ultimo){
             return true;
         }else{
             return false;
         }
     }
-
     public String getCCType(String ccNumber){
         String visaRegex = "^4[0-9]{12}(?:[0-9]{3})?$";
         String masterRegex = "^5[1-5][0-9]{14}$";
@@ -176,6 +193,50 @@ public class RegistradoController {
         } catch (Exception e) { e.printStackTrace(); }
         return null; }
 
+    @GetMapping("/listapedidos")
+    public String listapedidos(Model model){
+       // model.addAttribute("listapedidos",prodSelRepository.findById());
+        return "";
+    }
 
+        @GetMapping("/quitarCarrito")
+        public String quitarCarrito(@RequestParam("id") int id, HttpSession session,RedirectAttributes attr){
+        Optional<Producto> pro1 = productoRepository.findById(id);
+        if (pro1.isPresent()){
+            Producto p = pro1.get();
+            Usuario usuario = (Usuario) session.getAttribute("user");
+            List<ProductoSel> seleccionado = prodSelRepository.findByCarrito(p.getIdproducto(),usuario.getIdusuarios());
+            if (seleccionado.isEmpty()){
+                return "redirect:/registrado/verCarrito";
+            }else{
+                for (ProductoSel pro : seleccionado) {
+                    if(pro.getProducto().getIdproducto() == p.getIdproducto()) {
+                        int cantidad = pro.getCantidad() - 1;
+                        if (cantidad <=  0) {
+                            attr.addFlashAttribute("msg1", "Producto Borrado");
+                            int cantidadCarrito = (int) session.getAttribute("numeroCarrito");
+                            cantidadCarrito = cantidadCarrito -1;
+                            session.setAttribute("numeroCarrito", cantidadCarrito);
+                            prodSelRepository.deleteById(pro.getIdproductoseleccionado());
+                            return "redirect:/registrado/verCarrito";
+                        } else {
+                            pro.setCantidad(cantidad);
+                            prodSelRepository.save(pro);
+                            int cantidadCarrito = (int) session.getAttribute("numeroCarrito");
+                            cantidadCarrito = cantidadCarrito -1;
+                            session.setAttribute("numeroCarrito", cantidadCarrito);
+                            attr.addFlashAttribute("msg", "Quitaste un Producto");
+                            break;
+                        }
+                    }
+                }
+            }
+            return "redirect:/registrado/verCarrito";
+        }else {
+            return "redirect:/registrado/verCarrito";
+        }
+
+
+        }
 
 }

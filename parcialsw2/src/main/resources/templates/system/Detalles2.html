@@ -22,11 +22,8 @@
                         <hr>
                         <br>
                         <div class="d-flex">
-                            <div sec:authorize="hasAnyAuthority( 'registrado','gestor', 'admin')"  class="col-lg-6">
-                                <img th:src="@{|${session.user.rol}/image/${producto.idproducto}|}" width="160px" height="160px">
-                            </div>
-                            <div sec:authorize="isAnonymous()"  class="col-lg-6">
-                                <img th:src="@{|${session.user.rol}/image/${producto.idproducto}|}" width="160px" height="160px">
+                            <div   class="col-lg-6">
+                                <img th:src="@{|image/${producto.idproducto}|}" width="160px" height="160px">
                             </div>
                             <div class="col-lg-10">
                                 <div class="row">
@@ -51,13 +48,10 @@
                                     <p th:text="${producto.descripcion}"></p>
                                 </div>
                                 <br><br><br>
-<<<<<<< HEAD
                                 <div sec:authorize="hasAnyAuthority( 'gestor', 'admin')" class="d-flex">
                                     <a th:href="@{/list}" style="width: 100px; height: 38px; margin-top: 0.5rem" class="btn btn-celeste btn-user btn-block">Regresar</a>
                                     <div style="width: 15px"></div>
                                 </div>
-=======
->>>>>>> e879101cb25ae511d952d6242daaf88daad2e336
                                 <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                     <a th:href="@{/list}" style="width: 100px; height: 38px; margin-top: 0.5rem" class="btn btn-celeste btn-user btn-block">Regresar</a>
                                     <div style="width: 15px"></div>
