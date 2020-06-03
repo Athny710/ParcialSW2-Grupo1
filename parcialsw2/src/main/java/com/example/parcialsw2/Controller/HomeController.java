@@ -38,8 +38,14 @@ public class HomeController {
 
     }
     @GetMapping("/vermas")
-    public String vermas(@RequestParam("id") int id){
-        return "system/detalles";
+    public String vermas(@RequestParam("id") int id, Model model){
+        Optional<Producto> opt = productoRepository.findById(id);
+        if(opt.isPresent()){
+            model.addAttribute("producto", opt.get());
+            return "system/Detalles";
+        }else{
+            return "redirect:/list";
+        }
     }
 
     @GetMapping("/image/{id}")
