@@ -1,8 +1,10 @@
 package com.example.parcialsw2.Controller;
 
 import com.example.parcialsw2.entity.Producto;
+import com.example.parcialsw2.entity.ProductoSel;
 import com.example.parcialsw2.entity.Usuario;
 import com.example.parcialsw2.repository.PaginationRepository;
+import com.example.parcialsw2.repository.ProdSelRepository;
 import com.example.parcialsw2.repository.ProductoRepository;
 import com.example.parcialsw2.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class GestorController {
     ProductoRepository productoRepository;
     @Autowired
     PaginationRepository paginationRepository;
+    @Autowired
+    ProdSelRepository prodSelRepository;
 
     @GetMapping(value = {"","/list"})
     public String index(Model model, @RequestParam(defaultValue = "0") int page){
@@ -144,4 +148,30 @@ public class GestorController {
     }
 
 
+    @GetMapping("/eliminar")
+    public String eliminar(@RequestParam("id") int id, RedirectAttributes attr){
+
+        Optional<Producto> otpro = productoRepository.findById(id);
+
+        if(otpro.isPresent()){
+            Producto pro = otpro.get();
+            List<ProductoSel> lista = prodSelRepository.findByProducto(pro);
+
+                if(lista.isEmpty()){
+                    attr.addFlashAttribute("msg", "Borrado exitosamente");
+                    productoRepository.deleteById(id);
+                    return "redirect:/list";
+                }else{
+                    attr.addFlashAttribute("msg1", "No puede ser Borrado");
+                    return "redirect:/list";
+                }
+
+        }else {
+            attr.addFlashAttribute("msg1", "El producto no existe");
+            return "redirect:/list";
+        }
+
+
+
+    }
 }

@@ -13,16 +13,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.management.Query;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/admin")
@@ -96,30 +99,68 @@ public class AdminController {
     }
 
     @PostMapping("guardar")
-    public String guardarPost(@ModelAttribute("usuario") @Valid Usuario usuario,
+    public String guardarGestor(@ModelAttribute("usuario") @Valid Usuario usuario,
                               BindingResult bindingResult,
                               Model model, RedirectAttributes attr){
+        String contrasenha = "";
+        Random rnd = new Random();
+        for (int i = 0; i < 10; i++) {
+            if(i < 2){
+                contrasenha += rnd.nextInt(10);
+            } else {
+                contrasenha += (char)(rnd.nextInt(91) + 65);
+            }
+        }
         if(bindingResult.hasErrors()){
+            model.addAttribute("msg","tiene errores");
             return "admin/formGestor";
         }else{
-            usuario.setRol("gestor");
-            usuario.setActivo(1);
-            usuario.setContrasenha("123");
-            attr.addFlashAttribute("msg", "Gestor "+(usuario.getIdusuarios()==0 ? "creado " : "actualizado ")+"exitosamente");
-            usuarioRepository.save(usuario);
-            return "redirect:/admin/listaGestores";
+            if (usuario.getIdusuarios()==0) {
+                if(usuarioRepository.findByCorreo(usuario.getCorreo()) == null){
+                    usuario.setRol("gestor");
+                    usuario.setActivo(1);
+                    attr.addFlashAttribute("msg", "Gestor creado exitosamente");
+                    usuario.setContrasenha(contrasenha);
+                    usuarioRepository.save(usuario);
+                    List<Usuario> listaUsu = usuarioRepository.findAll();
+                    Usuario user = listaUsu.get(listaUsu.size() - 1);
+                    usuarioRepository.guardarContra(new BCryptPasswordEncoder().encode(contrasenha),user.getIdusuarios());
+                    return "redirect:/admin/listaGestores";
+                }else{
+                    model.addAttribute("listaUsuarios", usuarioRepository.findAll());
+                    attr.addFlashAttribute("msgError", "El correo ya se encuentra registrado, ingrese otro, por favor");
+                    return "redirect:/admin/nuevo";
+                }
+            }else {
+                usuario.setRol("gestor");
+                usuario.setActivo(1);
+                usuario.setContrasenha(contrasenha);
+                attr.addFlashAttribute("msg", "Gestor actualizado exitosamente");
+                usuarioRepository.save(usuario);
+                usuarioRepository.guardarContra(new BCryptPasswordEncoder().encode(contrasenha),usuario.getIdusuarios());
+                return "redirect:/admin/listaGestores";
+            }
         }
     }
-
     @GetMapping("editar")
     public String editarEmployee(@ModelAttribute("usuario")  Usuario usuario,Model model, @RequestParam("id") int id) {
         Optional<Usuario> user1 = usuarioRepository.findById(id);
         if (user1.isPresent()) {
             usuario = user1.get();
             model.addAttribute("usuario", usuario);
-            return "admin/editGestor";
+            return "admin/formGestor";
         } else {
             return "redirect:/admin/listaGestores";
         }
     }
+    @GetMapping("borrar")
+    public String borrarEmpleado(@RequestParam("id") int id, RedirectAttributes attr) {
+        Optional<Usuario> user = usuarioRepository.findById(id);
+        if (user.isPresent()) {
+            usuarioRepository.deleteById(id);
+            attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
+        }
+        return "redirect:/listaGestores";
+    }
+
 }

@@ -27,12 +27,14 @@ public class Usuario implements Serializable {
     @NotBlank
     @Size(max=45, message = "Demasiados caracteres")
     private String correo;
+
     @NotBlank
     private String contrasenha;
     @Column(nullable = false)
     private String rol;
     @Column(nullable = false)
     private int activo;
+
 
 
     public int getIdusuarios() {
@@ -98,4 +100,5 @@ public class Usuario implements Serializable {
     public void setActivo(int activo) {
         this.activo = activo;
     }
+
 }
