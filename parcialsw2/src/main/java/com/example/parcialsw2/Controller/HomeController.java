@@ -6,6 +6,7 @@ import com.example.parcialsw2.service.Email;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
 
 import com.example.parcialsw2.entity.Producto;
 import com.example.parcialsw2.repository.ProductoRepository;
@@ -30,6 +32,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -118,6 +121,34 @@ public class HomeController {
     @GetMapping("recuperar")
     public String recuperarContra(){
         return "system/RecuperarCont";
+    }
+
+
+
+    @PostMapping("/cambiar")
+    public String cambiar(@RequestParam("pss1") String pss1,
+                          @RequestParam("pss2") String pss2,
+                          @RequestParam("correo") String correo, Model model){
+
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+
+        if(pss1.equals(pss2)){
+
+            if(usuario!=null){
+                usuario.setContrasenha(new BCryptPasswordEncoder().encode(pss1));
+                usuarioRepository.save(usuario);
+                model.addAttribute("msg", "Contraseña actualizada");
+                return "iniciarSesion";
+            }else {
+                model.addAttribute("msg", "El correo no está registrado");
+                return "iniciarSesion";
+            }
+
+        }else {
+            model.addAttribute("msg", "Las contraseñas no coinciden.");
+            return "iniciarSesion";
+        }
+
     }
 
 
