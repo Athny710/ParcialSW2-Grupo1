@@ -2,6 +2,7 @@ package com.example.parcialsw2.Controller;
 
 import com.example.parcialsw2.entity.Usuario;
 import com.example.parcialsw2.repository.PaginationRepository;
+import com.example.parcialsw2.repository.UsuRepository;
 import com.example.parcialsw2.repository.UsuarioRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,7 @@ import com.example.parcialsw2.service.Email;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -25,6 +27,9 @@ import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +42,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -145,12 +151,51 @@ public class HomeController {
         return "system/Registrarse";
     }
 
+    @Autowired
+    UsuRepository usuRepository;
 
+    @PostMapping("guardarUsuario")
+    public String guardarUsuario(@ModelAttribute("usuario") Usuario u){
+        u.setActivo(1);
+        u.setRol("registrado");
+        usuRepository.guardarUsuario(u.getIdusuarios(), u.getNombre(), u.getApellido(),
+                                    u.getDni(), u.getCorreo(), u.getContrasenha(), u.getRol(), u.getActivo());
+
+        return "iniciarSesion";
+    }
 
 
     @GetMapping("recuperar")
     public String recuperarContra(){
         return "system/RecuperarCont";
+    }
+
+
+
+    @PostMapping("/cambiar")
+    public String cambiar(@RequestParam("pss1") String pss1,
+                          @RequestParam("pss2") String pss2,
+                          @RequestParam("correo") String correo, Model model){
+
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+
+        if(pss1.equals(pss2)){
+
+            if(usuario!=null){
+                usuario.setContrasenha(new BCryptPasswordEncoder().encode(pss1));
+                usuarioRepository.save(usuario);
+                model.addAttribute("msg", "Contraseña actualizada");
+                return "iniciarSesion";
+            }else {
+                model.addAttribute("msg", "El correo no está registrado");
+                return "iniciarSesion";
+            }
+
+        }else {
+            model.addAttribute("msg", "Las contraseñas no coinciden.");
+            return "iniciarSesion";
+        }
+
     }
 
 

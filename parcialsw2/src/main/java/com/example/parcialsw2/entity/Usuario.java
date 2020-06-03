@@ -6,21 +6,6 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@NamedStoredProcedureQuery(
-        name = "guardar",
-        procedureName = "guardar",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = int.class, name = "id"),
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "nombre"),
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "apellido"),
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "dni"),
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "correo"),
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "contrasenha"),
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = String.class, name = "rol"),
-                @StoredProcedureParameter(mode = ParameterMode.IN, type = int.class, name = "activo")
-        }
-)
-
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
 
@@ -42,6 +27,8 @@ public class Usuario implements Serializable {
     @NotBlank
     @Size(max=45, message = "Demasiados caracteres")
     private String correo;
+
+    @NotBlank
     private String contrasenha;
     @Column(nullable = false)
     private String rol;
