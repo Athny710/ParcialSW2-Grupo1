@@ -5,9 +5,13 @@
 </head>
 <body>
 
-<div class="container" id="contenido">
-    <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
-    <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
+<div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column bg-white">
+        <!-- Main Content -->
+        <div id="content">
+            <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
+            <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
+            <div class="container" id="contenido">
     <br>
     <br>
     <h3>Crear Gestor</h3>
@@ -48,6 +52,9 @@
         <a th:href="@{/admin}" class="btn btn-danger">Cancelar</a>
         <button type="submit" class="btn btn-primary" th:text="${usuario.idusuarios == 0 ? 'Registrar': 'Actualizar'}">Guardar</button>
     </form>
+</div>
+        </div>
+    </div>
 </div>
 <div th:replace="fragmentos/Fragmentos.html::Script"></div>
 </body>
