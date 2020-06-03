@@ -27,5 +27,4 @@ public class EstadisticasController {
 
         return "gestor/estadisticas";
     }
-
 }
