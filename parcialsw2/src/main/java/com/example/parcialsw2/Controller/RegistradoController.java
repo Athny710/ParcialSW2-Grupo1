@@ -113,10 +113,18 @@ public class RegistradoController {
     @PostMapping("/checkout")
     public String checkout(@RequestParam("numero") String num, Model model){
         if(verificarTarjeta(num)){
-            model.addAttribute("msg", "tarjeta valida");
-            return "registrado/checkout";
+            if(getCCType(num).equals("VISA")){
+                model.addAttribute("msg", "tarjeta VISA válida");
+                return "registrado/checkout";
+            }else if (getCCType(num).equals("MASTER")) {
+                model.addAttribute("msg", "tarjeta MASTERCARD valida");
+                return "registrado/checkout";
+            }else{
+                model.addAttribute("msg", "su tarjeta es valida, pero no es VISA ni MASTERCARD");
+                return "registrado/checkout";
+            }
         }else{
-            model.addAttribute("msg", "tarjeta invlida");
+            model.addAttribute("msg", "tarjeta invalida");
             return "registrado/checkout";
         }
 
@@ -156,13 +164,13 @@ public class RegistradoController {
     public String getCCType(String ccNumber){
         String visaRegex = "^4[0-9]{12}(?:[0-9]{3})?$";
         String masterRegex = "^5[1-5][0-9]{14}$";
-        String amexRegex = "^3[47][0-9]{13}$";
-        String dinersClubrRegex = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$";
-        String discoverRegex = "^6(?:011|5[0-9]{2})[0-9]{12}$";
-        String jcbRegex = "^(?:2131|1800|35\\d{3})\\d{11}$";
-        String commonRegex = "^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$";
+        //String amexRegex = "^3[47][0-9]{13}$";
+        //String dinersClubrRegex = "^3(?:0[0-5]|[68][0-9])[0-9]{11}$";
+        //String discoverRegex = "^6(?:011|5[0-9]{2})[0-9]{12}$";
+        //String jcbRegex = "^(?:2131|1800|35\\d{3})\\d{11}$";
+        //String commonRegex = "^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$";
         try { ccNumber = ccNumber.replaceAll("\\D", "");
-            return (ccNumber.matches(visaRegex) ? "VISA" : ccNumber.matches(masterRegex) ? "MASTER" :ccNumber.matches(amexRegex) ? "AMEX" :ccNumber.matches(dinersClubrRegex) ? "DINER" :ccNumber.matches(discoverRegex) ? "DISCOVER" :ccNumber.matches(jcbRegex) ? "JCB":null);
+            return (ccNumber.matches(visaRegex) ? "VISA" : ccNumber.matches(masterRegex) ? "MASTER" :null);
         } catch (Exception e) { e.printStackTrace(); }
         return null; }
 
