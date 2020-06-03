@@ -51,13 +51,12 @@
                                     <p th:text="${producto.descripcion}"></p>
                                 </div>
                                 <br><br><br>
-<<<<<<< HEAD
+
                                 <div sec:authorize="hasAnyAuthority( 'gestor', 'admin')" class="d-flex">
                                     <a th:href="@{/list}" style="width: 100px; height: 38px; margin-top: 0.5rem" class="btn btn-celeste btn-user btn-block">Regresar</a>
                                     <div style="width: 15px"></div>
                                 </div>
-=======
->>>>>>> e879101cb25ae511d952d6242daaf88daad2e336
+
                                 <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                     <a th:href="@{/list}" style="width: 100px; height: 38px; margin-top: 0.5rem" class="btn btn-celeste btn-user btn-block">Regresar</a>
                                     <div style="width: 15px"></div>

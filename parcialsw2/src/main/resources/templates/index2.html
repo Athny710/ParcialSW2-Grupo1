@@ -14,11 +14,11 @@
                 <!-- Page Heading -->
                 <div class="d-flex col-lg-12">
                     <div class="col-lg-4"></div>
-                    <form class="form-inline mr-auto w-100 navbar-search center">
+                    <form method="post" th:action="@{/buscador}" class="form-inline mr-auto w-100 navbar-search center">
                         <div class="input-group col-lg-5">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" name="search" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn bg-Projo" type="button">
+                                <button type="submit" class="btn bg-Projo" >
                                     <i class="fas fa-search fa-sm text-white"></i>
                                 </button>
                             </div>
@@ -87,7 +87,7 @@
                             <div class="col-lg-1"></div>
                         </div>
                     </div>
-                    <div class="col-lg-6" th:object="${lista[i.index+i.index+1]}">
+                    <div th:if="${lista.size() > 1} " class="col-lg-6" th:object="${lista[i.index+i.index+1]}">
                         <div class="d-flex">
                             <div class="col-lg-1"></div>
                             <!-- Basic Card Example -->

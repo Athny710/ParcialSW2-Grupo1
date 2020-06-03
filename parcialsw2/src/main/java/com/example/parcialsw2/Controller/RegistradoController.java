@@ -1,5 +1,6 @@
 package com.example.parcialsw2.Controller;
 
+import com.example.parcialsw2.DTO.CodigosTotales;
 import com.example.parcialsw2.DTO.ProductosxCodigo;
 import com.example.parcialsw2.entity.Producto;
 import com.example.parcialsw2.entity.ProductoSel;
@@ -106,7 +107,16 @@ public class RegistradoController {
     }
 
     @GetMapping("/vistacheck")
-    public String vistacheck(){
+    public String vistacheck(Model model, HttpSession session){
+
+        Usuario usuario = (Usuario) session.getAttribute("user");
+        List<ProductoSel> carrito = prodSelRepository.NumeroCarrito(usuario.getIdusuarios());
+        double precioTotal = 0;
+        for(ProductoSel pro : carrito){
+            precioTotal = precioTotal + (pro.getCantidad() * pro.getProducto().getPrecio());
+        }
+        model.addAttribute("precioFinal", precioTotal);
+
         return "registrado/checkout";
     }
 
@@ -116,7 +126,7 @@ public class RegistradoController {
             if(getCCType(num).equals("VISA")){
                 Usuario usuario = (Usuario) session.getAttribute("user");
                 List<ProductoSel> carrito = prodSelRepository.NumeroCarrito(usuario.getIdusuarios());
-                List<ProductoSel> paraid = prodSelRepository.findAll();
+                List<CodigosTotales> paraid = prodSelRepository.obtenerCantidadDeCodigos();
                 Calendar fecha = new GregorianCalendar();
                 int año = fecha.get(Calendar.YEAR);
                 int mes = fecha.get(Calendar.MONTH);
@@ -124,6 +134,7 @@ public class RegistradoController {
                 String fechaParaDB = año + "-" + (mes+1) + "-"  + dia;
                 String fechaActual = dia + "" + (mes+1) + ""  + año + "";
                 String auto = paraid.size() + "";
+
                 String codigoGenerado = "PE" + fechaActual + auto;
 
                 for(ProductoSel pro : carrito){
@@ -249,8 +260,8 @@ public class RegistradoController {
         }else {
             return "redirect:/registrado/verCarrito";
         }
-
-
         }
+
+
 
 }

@@ -65,4 +65,8 @@ public interface ProdSelRepository extends JpaRepository<ProductoSel, Integer> {
     @Query(value = "SELECT pr.nombre AS nombre, ps.codigo AS codigo, ps.cantidad AS cantidad, pr.precio AS precio, ps.preciototal AS pretoto, ps.fecha AS fechita FROM ex1.producto_seleccionado ps, ex1.producto pr\n" +
             "WHERE ps.codigo=?1 AND ps.idproducto = pr.idproducto", nativeQuery = true)
     List<ProductosxCodigo> obtenerProductosXCodigo(String code);
+
+    @Query(value = "SELECT DISTINCT(ps.codigo) as cantcodi FROM ex1.producto_seleccionado ps", nativeQuery = true)
+    List<CodigosTotales> obtenerCantidadDeCodigos();
+
 }

@@ -122,6 +122,18 @@ public class HomeController {
         }
     }
 
+    @PostMapping("/buscador")
+    public String buscador(Model model, @RequestParam("search") String search){
 
+        if(search.equalsIgnoreCase("")){
+            return "redirect:/list";
+        }else{
+            String buscar = search + "%";
+            model.addAttribute("lista",productoRepository.Buscador(buscar));
+            return "index2";
+        }
+
+
+    }
 
 }
