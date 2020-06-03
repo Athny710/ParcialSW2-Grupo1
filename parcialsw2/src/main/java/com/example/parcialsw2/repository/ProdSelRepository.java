@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface ProdSelRepository extends JpaRepository<ProductoSel, Integer> {
 
+
     @Query(value="SELECT count(ps.codigo) as cantidad FROM ex1.producto_seleccionado ps, ex1.usuarios us\n" +
             "where us.rol = 'registrado'", nativeQuery=true)
     List<CantidadCompras> obtenerCantidadCompras();

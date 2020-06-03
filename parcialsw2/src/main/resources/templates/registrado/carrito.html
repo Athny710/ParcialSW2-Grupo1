@@ -16,6 +16,9 @@
                 <div class="d-flex col-lg-12">
                     <div class="col-lg-5"></div>
                     <div class="col-lg-2">
+                        <p th:text="|Precio Final:  ${precioFinal}|"></p>
+                        <br>
+                        <br>
                         <a class="btn btn-celeste btn-user btn-block" th:href="@{/registrado/vistacheck}">Proceder a Comprar</a>
                     </div>
                 </div>
@@ -54,6 +57,16 @@
                                                 <div class="col-lg-1"></div>
                                                 <p th:text="${x.cantidad}"></p>
                                             </div>
+                                            <div class="row">
+                                                <p>SubTotal:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${x.cantidad} * ${x.producto.precio}"></p>
+                                            </div>
+                                            <br>
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a  th:href="@{'/registrado/quitarCarrito' + '?id=' + ${x.idproductoseleccionado}}" style="width: 160px" class="btn btn-danger btn-user btn-block">Quitar de Carrito</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -62,6 +75,7 @@
                         </div>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
     </div>
