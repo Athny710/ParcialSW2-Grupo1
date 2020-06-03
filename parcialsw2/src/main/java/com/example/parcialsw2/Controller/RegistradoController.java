@@ -114,28 +114,33 @@ public class RegistradoController {
 
     }
 
-
     public boolean verificarTarjeta(String numero){
         char[] caracteres = numero.toCharArray();
-        int[] carac2 = new int[14];
+        int[] carac2 = new int[15];
         int ultimo = Character.getNumericValue(caracteres[15]);
         int suma=0;
 
-        for(int i=0, j=14; i<14; i++, j--){
+        for(int i=0, j=14; i<15; i++, j--){
             carac2[i] = Character.getNumericValue(caracteres[j]);
         }
-        for (int i=0; i<7; i++){
-            carac2[i]=carac2[i]*2;
-            i++;
+        for (int i=0; i<15; i++){
+            if(i%2==0){
+                carac2[i]=carac2[i]*2;
+            }
+
         }
         for (int i=0; i<14; i++){
-            if(carac2[i]>=9){
+            if(carac2[i]>9){
                 carac2[i]=carac2[i]-9;
             }
         }
-        for (int i=0; i<14; i++){
+        for (int i=0; i<15;i++){
+            System.out.println(carac2[i]);
+        }
+        for (int i=0; i<15; i++){
             suma= suma + carac2[i];
         }
+        System.out.println(suma);
         if(suma%10==ultimo){
             return true;
         }else {
