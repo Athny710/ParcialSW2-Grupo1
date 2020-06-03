@@ -135,7 +135,6 @@ public class RegistradoController {
             if(i%2==0){
                 carac2[i]=carac2[i]*2;
             }
-
         }
         for (int i=0; i<14; i++){
             if(carac2[i]>9){
@@ -149,7 +148,7 @@ public class RegistradoController {
             suma= suma + carac2[i];
         }
         System.out.println(suma);
-        if(suma%10==ultimo){
+        if(10-(suma%10)==ultimo){
             return true;
         }else {
             return false;
