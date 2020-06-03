@@ -40,31 +40,31 @@
                                 </div>
                                 <br>
                                 <br>
-                                <form class="user" method="post" th:action="@{/processLogin}">
+                                <form class="user" method="post" th:action="@{/confirm/reestablecer}">
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="nombre" name="nombre" aria-describedby="emailHelp" placeholder="Nombre">
+                                        <input type="text" class="form-control form-control-user" id="nombre" name="nombre" aria-describedby="emailHelp" placeholder="Nombre">
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="apellido" name="apellido" aria-describedby="emailHelp" placeholder="Apellido">
+                                        <input type="text" class="form-control form-control-user" id="apellido" name="apellido" aria-describedby="emailHelp" placeholder="Apellido">
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="dni" name="dni" aria-describedby="emailHelp" placeholder="DNI">
+                                        <input type="text" class="form-control form-control-user" id="dni" name="dni" aria-describedby="emailHelp" placeholder="DNI">
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="correo" name="correo" aria-describedby="emailHelp" placeholder="Correo">
+                                        <input type="text" class="form-control form-control-user" id="correo" name="correo" aria-describedby="emailHelp" placeholder="Correo">
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="contraseña" name="contraseña" aria-describedby="emailHelp" placeholder="Contraseña">
+                                        <input type="password" class="form-control form-control-user" id="contraseña" name="contraseña" aria-describedby="emailHelp" placeholder="Contraseña">
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="cont2" name="cont2" aria-describedby="emailHelp" placeholder="Contraseña">
+                                        <input type="password" class="form-control form-control-user" id="cont2" name="cont2" aria-describedby="emailHelp" placeholder="Confirmar contraseña">
                                     </div>
 
                                     <hr>
                                     <button type="submit" class="btn btn-verde btn-user btn-block">
                                         Registrarse
                                     </button>
-                                    <a th:href="@{/inicio}" class="btn btn-green btn-user btn-block">
+                                    <a th:href="@{/loginForm}" class="btn btn-green btn-user btn-block">
                                         Regresar
                                     </a>
 

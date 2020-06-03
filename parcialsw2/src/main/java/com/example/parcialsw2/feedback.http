@@ -1,0 +1,7 @@
+POST http://localhost:8080/feedback
+Content-Type: application/json
+{
+  "nombre" : "Samuel",
+  "email"  : "a20166262@pucp.edu.pe",
+  "mensaje": "Reestablecer"
+}
