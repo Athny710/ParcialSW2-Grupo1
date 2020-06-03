@@ -92,7 +92,15 @@ public class RegistradoController {
     }
 
     @GetMapping("/verCarrito")
-    public String verCarrito(Model model){
+    public String verCarrito(Model model, HttpSession session){
+        Usuario usuario = (Usuario) session.getAttribute("user");
+        List<ProductoSel> carrito = prodSelRepository.NumeroCarrito(usuario.getIdusuarios());
+        double precioTotal = 0;
+        for(ProductoSel pro : carrito){
+            precioTotal = precioTotal + (pro.getCantidad() * pro.getProducto().getPrecio());
+        }
+
+        model.addAttribute("precioFinal", precioTotal);
         model.addAttribute("lista",prodSelRepository.findAll());
         return "registrado/carrito";
     }

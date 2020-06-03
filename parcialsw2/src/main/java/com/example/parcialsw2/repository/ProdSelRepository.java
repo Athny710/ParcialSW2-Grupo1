@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface ProdSelRepository extends JpaRepository<ProductoSel, Integer> {
 
-    List<ProductoSel> findByProductoAndAndUsuario(Producto pro, Usuario usu);
 
     @Query(value = " SELECT * FROM ex1.producto_seleccionado \n" +
             "where idproducto = ?1 and comprado ='0' and idusuarios = ?2 ", nativeQuery = true)

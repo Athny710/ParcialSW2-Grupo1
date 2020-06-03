@@ -62,6 +62,16 @@
                                                 <div class="col-lg-1"></div>
                                                 <p th:text="${x.cantidad}"></p>
                                             </div>
+                                            <div class="row">
+                                                <p>SubTotal:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${x.cantidad} * ${x.producto.precio}"></p>
+                                            </div>
+                                            <br>
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a  th:href="@{'/registrado/quitarCarrito' + '?id=' + ${x.idproductoseleccionado}}" style="width: 160px" class="btn btn-danger btn-user btn-block">Quitar de Carrito</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -71,6 +81,7 @@
                     </div>
 
                 </div>
+                <br>
             </div>
         </div>
     </div>

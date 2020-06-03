@@ -19,7 +19,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/loginForm").loginProcessingUrl("/processLogin")
                 .usernameParameter("correo")
                 .passwordParameter("contrasenha")
-                .defaultSuccessUrl("/redirectByRole",true);
+                .defaultSuccessUrl("/redirectByRole",true).and()
+                .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(172800);
         http.logout().logoutUrl("/cerrar").logoutSuccessUrl("/").deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
         http.authorizeRequests().antMatchers("/admin","/admin/**").hasAuthority("admin");
