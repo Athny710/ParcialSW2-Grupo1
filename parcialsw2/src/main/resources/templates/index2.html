@@ -87,7 +87,7 @@
                             <div class="col-lg-1"></div>
                         </div>
                     </div>
-                    <div class="col-lg-6" th:object="${lista[i.index+i.index+1]}">
+                    <div th:if="${lista.size() > 1} " class="col-lg-6" th:object="${lista[i.index+i.index+1]}">
                         <div class="d-flex">
                             <div class="col-lg-1"></div>
                             <!-- Basic Card Example -->

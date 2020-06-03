@@ -122,7 +122,7 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/buscador")
+    @PostMapping("/buscador")
     public String buscador(Model model, @RequestParam("search") String search){
 
         if(search.equalsIgnoreCase("")){
