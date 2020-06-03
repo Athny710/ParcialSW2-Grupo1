@@ -194,6 +194,12 @@ public class RegistradoController {
         } catch (Exception e) { e.printStackTrace(); }
         return null; }
 
+    @GetMapping("/listapedidos")
+    public String listapedidos(Model model){
+       // model.addAttribute("listapedidos",prodSelRepository.findById());
+        return "";
+    }
+
         @GetMapping("/quitarCarrito")
         public String quitarCarrito(@RequestParam("id") int id, HttpSession session,RedirectAttributes attr){
         Optional<Producto> pro1 = productoRepository.findById(id);
