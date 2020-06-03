@@ -48,7 +48,7 @@
                                     <p th:text="${producto.descripcion}"></p>
                                 </div>
                                 <br><br><br>
-                                <div sec:authorize="hasAnyAuthority('registrado', 'gestor', 'admin')" class="d-flex">
+                                <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                     <a th:href="@{/list}" style="width: 100px; height: 38px; margin-top: 0.5rem" class="btn btn-celeste btn-user btn-block">Regresar</a>
                                     <div style="width: 15px"></div>
                                     <a  th:href="@{'/registrado/carrito' + '?id=' + ${producto.idproducto}}" style="width: 160px;margin-top: 0.5rem" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
