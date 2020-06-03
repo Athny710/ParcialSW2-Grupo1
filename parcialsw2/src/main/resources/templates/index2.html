@@ -27,7 +27,59 @@
                 </div>
                 <br><br>
                 <div class="row" th:each="x,i:${lista}">
-                    <div class="col-lg-6" th:if="${i.index<4}">
+                    <div class="col-lg-6" >
+                        <div class="d-flex" th:object="${lista[i.index+i.index]}">
+                            <div class="col-lg-1"></div>
+                            <!-- Basic Card Example -->
+                            <div class="card shadow mb-4 col-lg-10">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="col-lg-6">
+                                            <br>
+                                            <img th:src="@{|image/${x.idproducto}|}" width="135px" height="135px">
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <div class="row">
+                                                <p>Código:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${lista[i.index+i.index].nombre}"></p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Nombre:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${lista[i.index+i.index].nombre}"></p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Precio:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${lista[i.index+i.index].precio}"></p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Stock:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${lista[i.index+i.index].stock}"></p>
+                                            </div>
+                                            <a href="#">+Ver más</a>
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a th:href="@{'/registrado/carrito' + '?id=' + ${lista[i.index+i.index].idproducto}}"  style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="isAnonymous()" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a th:href="@{/}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                            </div>
+                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a th:href="@{'/gestor/editar' + '?id=' + ${lista[i.index+i.index].idproducto}}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" th:object="${lista[i.index+i.index+1]}">
                         <div class="d-flex">
                             <div class="col-lg-1"></div>
                             <!-- Basic Card Example -->
@@ -42,87 +94,35 @@
                                             <div class="row">
                                                 <p>Código:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${x.nombre}"></p>
+                                                <p th:text="${lista[i.index+i.index+1].nombre}"></p>
                                             </div>
                                             <div class="row">
                                                 <p>Nombre:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${x.nombre}"></p>
+                                                <p th:text="${lista[i.index+i.index+1].nombre}"></p>
                                             </div>
                                             <div class="row">
                                                 <p>Precio:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${x.precio}"></p>
+                                                <p th:text="${lista[i.index+i.index+1].precio}"></p>
                                             </div>
                                             <div class="row">
                                                 <p>Stock:</p>
                                                 <div class="col-lg-1"></div>
-                                                <p th:text="${x.stock}"></p>
+                                                <p th:text="${lista[i.index+i.index+1].stock}"></p>
                                             </div>
                                             <a href="#">+Ver más</a>
                                             <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                                <a th:href="@{'/registrado/carrito' + '?id=' + ${lista[i.index+i.index+1].idproducto}}"  style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
                                             <div sec:authorize="isAnonymous()" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                                <a th:href="@{/}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
                                             <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-1"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6" th:if="${i.index>2}">
-                        <div class="d-flex">
-                            <div class="col-lg-1"></div>
-                            <!-- Basic Card Example -->
-                            <div class="card shadow mb-4 col-lg-10">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <div class="col-lg-6">
-                                            <br>
-                                            <img th:src="@{|${session.user.rol}/image/${x.idproducto}|}" width="135px" height="135px">
-                                        </div>
-                                        <div class="col-lg-10">
-                                            <div class="row">
-                                                <p>Código:</p>
-                                                <div class="col-lg-1"></div>
-                                                <p th:text="${x.nombre}"></p>
-                                            </div>
-                                            <div class="row">
-                                                <p>Nombre:</p>
-                                                <div class="col-lg-1"></div>
-                                                <p th:text="${x.nombre}"></p>
-                                            </div>
-                                            <div class="row">
-                                                <p>Precio:</p>
-                                                <div class="col-lg-1"></div>
-                                                <p th:text="${x.precio}"></p>
-                                            </div>
-                                            <div class="row">
-                                                <p>Stock:</p>
-                                                <div class="col-lg-1"></div>
-                                                <p th:text="${x.stock}"></p>
-                                            </div>
-                                            <a href="#">+Ver más</a>
-                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
-                                                <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
-                                            </div>
-                                            <div sec:authorize="isAnonymous()" class="d-flex">
-                                                <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
-                                            </div>
-                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
-                                                <div class="col-lg-2"></div>
-                                                <a th:href="@{'/gestor/editar' + '?id=' + ${x.idproducto}}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
+                                                <a th:href="@{'/gestor/editar' + '?id=' + ${lista[i.index+i.index+1].idproducto}}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
