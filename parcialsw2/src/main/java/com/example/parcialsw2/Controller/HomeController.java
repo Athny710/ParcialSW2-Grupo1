@@ -2,6 +2,7 @@ package com.example.parcialsw2.Controller;
 
 import com.example.parcialsw2.entity.Usuario;
 import com.example.parcialsw2.repository.PaginationRepository;
+import com.example.parcialsw2.repository.UsuRepository;
 import com.example.parcialsw2.repository.UsuarioRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,9 @@ import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -147,7 +151,18 @@ public class HomeController {
         return "system/Registrarse";
     }
 
+    @Autowired
+    UsuRepository usuRepository;
 
+    @PostMapping("guardarUsuario")
+    public String guardarUsuario(@ModelAttribute("usuario") Usuario u){
+        u.setActivo(1);
+        u.setRol("registrado");
+        usuRepository.guardarUsuario(u.getIdusuarios(), u.getNombre(), u.getApellido(),
+                                    u.getDni(), u.getCorreo(), u.getContrasenha(), u.getRol(), u.getActivo());
+
+        return "iniciarSesion";
+    }
 
 
     @GetMapping("recuperar")
