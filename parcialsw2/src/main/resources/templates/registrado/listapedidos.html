@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragmentos/Fragmentos.html::cabecera(titulo='Lista de pedidos')">
+</head>
+<body>
+<div class="container" id="contenido">
+    <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
+    <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
+    <h1>Lista de pedidos</h1><br><br>
+    <table class="table" th:each="lista,i : ${listas}">
+        <h5 th:text="${'Pedido ' + (i.index + 1)}"></h5>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Codigo de venta</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Precio total por producto</th>
+            <th>Monto total pagado</th>
+            <th>Fecha de solitud de pedido</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="valor,info : ${lista}">
+            <td th:text="${info.index + 1}"></td>
+            <td th:text="${valor.getCodigo()}"></td>
+            <td th:text="${valor.getNombre()}"></td>
+            <td th:text="${valor.getCantidad()}"></td>
+            <td th:text="${valor.getPrecio()}"></td>
+            <td th:text="${valor.getPrecio()} * ${valor.getCantidad()}"></td>
+            <td th:text="${valor.getPretoto()}"></td>
+            <td th:text="${valor.getFechita()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="fragmentos/Fragmentos.html::Script"></div>
+</body>
+</html>

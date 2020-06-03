@@ -17,7 +17,7 @@ public class EstadisticasController {
 
     @GetMapping(value = {"","/"})
     public String obtenerTodo(Model model){
-        model.addAttribute("cantidadVendida",prodSelRepository.obtenerCantidadCompras());
+        model.addAttribute("cantidadVendida",prodSelRepository.obtenerCantidadCompras().size());
         model.addAttribute("productocaro",prodSelRepository.obtenerProductoCaro());
         model.addAttribute("cantidadvendidos",prodSelRepository.obtenerCantidadVendidos());
         model.addAttribute("totalfacturado",prodSelRepository.obtenerTotalFacturado());

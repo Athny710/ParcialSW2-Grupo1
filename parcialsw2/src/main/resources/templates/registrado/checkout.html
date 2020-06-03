@@ -18,7 +18,7 @@
                     <div style="width: 500px"></div>
                     <h4 class="text-gray-900">Total a pagar:</h4>
                     <div class="col-lg-1"></div>
-                    <h4 class="text-gray-900">45</h4>
+                    <h4 class="text-gray-900" th:text="${precioFinal}">45</h4>
                 </div>
                 <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
                 <br><br>
