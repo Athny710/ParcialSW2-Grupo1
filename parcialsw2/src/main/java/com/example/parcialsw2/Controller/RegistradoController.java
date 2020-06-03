@@ -154,7 +154,7 @@ public class RegistradoController {
             suma= suma + carac2[i];
         }
         System.out.println(suma);
-        if(suma%10==ultimo){
+        if(10-(suma%10)==ultimo){
             return true;
         }else {
             return false;

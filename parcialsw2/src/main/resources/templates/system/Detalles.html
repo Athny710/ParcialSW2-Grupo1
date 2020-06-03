@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:replace="fragmentos/Fragmentos.html::cabecera(titulo='Página Principal')">
+</head>
+<body>
+<div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column bg-white">
+        <!-- Main Content -->
+        <div id="content">
+            <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
+            <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
+            <div class="container-fluid d-flex" style="text-align: center">
+                <!-- Page Heading -->
+                <div class="col-lg-3"></div>
+                <div class="card shadowA mb-4 col-lg-6 bg-gray-100">
+                    <div class="card-body bg-gray-100">
+                        <br>
+                        <div class="table-responsive bg-gray-100">
+                            <h3 th:text="${producto.nombre}" class="text-gray-900"></h3>
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="d-flex">
+                            <div class="col-lg-6">
+                                <img th:src="@{|${session.user.rol}/image/${producto.idproducto}|}" width="160px" height="160px">
+                            </div>
+                            <div class="col-lg-10">
+                                <div class="row">
+                                    <p class="col-lg-3">Código:</p>
+                                    <div class="col-lg-1"></div>
+                                    <p th:text="${producto.nombre}"></p>
+                                </div>
+                                <div class="row">
+
+                                    <p class="col-lg-3">Precio:</p>
+                                    <div class="col-lg-1"></div>
+                                    <p th:text="${producto.precio}"></p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-3">Stock:</p>
+                                    <div class="col-lg-1"></div>
+                                    <p th:text="${producto.stock}"></p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-3">Descripción:</p>
+                                    <div class="col-lg-1"></div>
+                                    <p th:text="${producto.descripcion}"></p>
+                                </div>
+                                <br><br><br>
+                                <div sec:authorize="hasAnyAuthority('registrado', 'gestor', 'admin')" class="d-flex">
+                                    <a th:href="@{/list}" style="width: 100px; height: 38px; margin-top: 0.5rem" class="btn btn-celeste btn-user btn-block">Regresar</a>
+                                    <div style="width: 15px"></div>
+                                    <a  th:href="@{'/registrado/carrito' + '?id=' + ${producto.idproducto}}" style="width: 160px;margin-top: 0.5rem" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                </div>
+                                <div sec:authorize="isAnonymous()" class="d-flex">
+
+                                    <a th:href="@{/list}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Regresar</a>
+                                    <a th:href="@{/loginForm}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<div th:replace="fragmentos/Fragmentos.html::Script"></div>
+</body>
+</html>
