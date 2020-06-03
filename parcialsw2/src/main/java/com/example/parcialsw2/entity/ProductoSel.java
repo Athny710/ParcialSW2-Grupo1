@@ -20,6 +20,8 @@ public class ProductoSel {
     private Usuario usuario;
     private String codigo;
     private Integer comprado;
+    private double preciototal;
+    private String fecha;
 
 
     public int getIdproductoseleccionado() {
@@ -68,5 +70,23 @@ public class ProductoSel {
 
     public void setComprado(Integer comprado) {
         this.comprado = comprado;
+    }
+
+
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public double getPreciototal() {
+        return preciototal;
+    }
+
+    public void setPreciototal(double preciototal) {
+        this.preciototal = preciototal;
     }
 }
