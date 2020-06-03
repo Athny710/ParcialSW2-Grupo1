@@ -123,7 +123,7 @@ public class RegistradoController {
                 int año = fecha.get(Calendar.YEAR);
                 int mes = fecha.get(Calendar.MONTH);
                 int dia = fecha.get(Calendar.DAY_OF_MONTH);
-                String fechaActual = año + (mes+1) + dia + "";
+                String fechaActual = dia + "" + (mes+1) + ""  + año + "";
                 String auto = paraid.size() + "";
                 String codigoGenerado = "PE" + fechaActual + auto;
                 for(ProductoSel pro : carrito){
@@ -190,4 +190,10 @@ public class RegistradoController {
             return (ccNumber.matches(visaRegex) ? "VISA" : ccNumber.matches(masterRegex) ? "MASTER" :null);
         } catch (Exception e) { e.printStackTrace(); }
         return null; }
+
+    @GetMapping("/listapedidos")
+    public String listapedidos(Model model){
+       // model.addAttribute("listapedidos",prodSelRepository.findById());
+        return "";
+    }
 }
