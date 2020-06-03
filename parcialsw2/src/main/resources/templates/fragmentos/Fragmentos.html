@@ -74,9 +74,7 @@
             <a class="nav-link" th:href="@{/estadisticas}">Estadísticas</a>
         </li>
 
-        <li sec:authorize="hasAnyAuthority('registrado')" class="nav-item">
-            <a class="nav-link" th:href="@{/registrado/checkout}">Checkout</a>
-        </li>
+
         <li sec:authorize="hasAnyAuthority('registrado')" class="nav-item">
             <a class="nav-link" th:href="@{/registrado/pedidos}">Lista de pedidos</a>
         </li>

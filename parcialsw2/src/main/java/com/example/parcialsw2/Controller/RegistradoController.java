@@ -132,6 +132,8 @@ public class RegistradoController {
                     prodSelRepository.save(pro);
                 }
                 attr.addFlashAttribute("msg2", "Compra realizada exitosamente con tarjeta VISA");
+                int cantidadCarrito = 0;
+                session.setAttribute("numeroCarrito", cantidadCarrito);
                 return "redirect:/registrado";
             }else if (getCCType(num).equals("MASTER")) {
                 attr.addFlashAttribute("msg2", "Compra realizada exitosamente con tarjeta MASTERCARD");
@@ -196,4 +198,45 @@ public class RegistradoController {
        // model.addAttribute("listapedidos",prodSelRepository.findById());
         return "";
     }
+
+        @GetMapping("/quitarCarrito")
+        public String quitarCarrito(@RequestParam("id") int id, HttpSession session,RedirectAttributes attr){
+        Optional<Producto> pro1 = productoRepository.findById(id);
+        if (pro1.isPresent()){
+            Producto p = pro1.get();
+            Usuario usuario = (Usuario) session.getAttribute("user");
+            List<ProductoSel> seleccionado = prodSelRepository.findByCarrito(p.getIdproducto(),usuario.getIdusuarios());
+            if (seleccionado.isEmpty()){
+                return "redirect:/registrado/verCarrito";
+            }else{
+                for (ProductoSel pro : seleccionado) {
+                    if(pro.getProducto().getIdproducto() == p.getIdproducto()) {
+                        int cantidad = pro.getCantidad() - 1;
+                        if (cantidad <=  0) {
+                            attr.addFlashAttribute("msg1", "Producto Borrado");
+                            int cantidadCarrito = (int) session.getAttribute("numeroCarrito");
+                            cantidadCarrito = cantidadCarrito -1;
+                            session.setAttribute("numeroCarrito", cantidadCarrito);
+                            prodSelRepository.deleteById(pro.getIdproductoseleccionado());
+                            return "redirect:/registrado/verCarrito";
+                        } else {
+                            pro.setCantidad(cantidad);
+                            prodSelRepository.save(pro);
+                            int cantidadCarrito = (int) session.getAttribute("numeroCarrito");
+                            cantidadCarrito = cantidadCarrito -1;
+                            session.setAttribute("numeroCarrito", cantidadCarrito);
+                            attr.addFlashAttribute("msg", "Quitaste un Producto");
+                            break;
+                        }
+                    }
+                }
+            }
+            return "redirect:/registrado/verCarrito";
+        }else {
+            return "redirect:/registrado/verCarrito";
+        }
+
+
+        }
+
 }
