@@ -7,10 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import javax.servlet.http.HttpServletRequest;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.StoredProcedureQuery;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.UUID;
+
 import com.example.parcialsw2.entity.Producto;
 import com.example.parcialsw2.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +22,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
@@ -30,6 +32,43 @@ public class HomeController {
     ProductoRepository productoRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
+
+
+    private EntityManagerFactory emf;
+    public void init(){
+        emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+    }
+    public void close(){
+        emf.close();
+    }
+    @PostMapping("/registrar")
+    public String guardar(@ModelAttribute("usuario") Usuario u){
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        StoredProcedureQuery query =em.createStoredProcedureQuery("guardar");
+        query.setParameter("id", u.getIdusuarios());
+        query.setParameter("nombre", u.getNombre());
+        query.setParameter("apellido", u.getApellido());
+        query.setParameter("dni", u.getDni());
+        query.setParameter("contrasenha", u.getContrasenha());
+        query.setParameter("rol", u.getRol());
+        query.setParameter("activo", u.getActivo());
+        query.execute();
+        em.getTransaction().commit();
+        em.close();
+
+        return "redirect:/list";
+    }
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping(value = {"","/list"})
     public String index(Model model){
@@ -67,21 +106,19 @@ public class HomeController {
         return "system/Registrarse";
     }
 
-    @PostMapping("/registrar")
+
     public String registrar(@ModelAttribute("usuario") @Valid Usuario u, BindingResult bindingResult,
                             @RequestParam("cont2") String cont2,
                             @RequestParam("cont1") String cont1){
         if(bindingResult.hasErrors()){
             return "redirect:/registrarse";
         }else{
-            if(!cont2.equals(cont1)){
-                return "redirect:/registrarse";
-            }else {
 
-            }
+
+            return "redirect:/list";
         }
 
-        return "";
+
     }
 
     @GetMapping("recuperar")
