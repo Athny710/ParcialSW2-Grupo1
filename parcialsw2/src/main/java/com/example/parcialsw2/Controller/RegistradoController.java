@@ -101,7 +101,7 @@ public class RegistradoController {
         }
 
         model.addAttribute("precioFinal", precioTotal);
-        model.addAttribute("lista",prodSelRepository.findAll());
+        model.addAttribute("lista",carrito);
         return "registrado/carrito";
     }
 
