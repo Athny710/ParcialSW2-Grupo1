@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:replace="fragmentos/Fragmentos.html::cabecera(titulo='Página Principal')">
+</head>
+<body>
+<div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column bg-white">
+        <!-- Main Content -->
+        <div id="content">
+            <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
+            <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="d-flex col-lg-12">
+                    <div class="col-lg-4"></div>
+                </div>
+                <br><br>
+
+                <table class="table">
+                    <thead>
+                    <tr><th>Cantidad de compras realizadas</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cv : ${cantidadVendida}">
+                        <td th:text="${cv.getCantidad()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <table class="table">
+                    <thead>
+                    <tr><th>Producto más caro</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="prod : ${productocaro}">
+                        <td th:text="${prod.getCaro()}"></td>
+                    </tr>
+                    </tbody>
+                </table><br>
+
+                <table class="table">
+                    <thead>
+                    <tr><th>Cantidad de productos vendidos</th></tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cpv : ${cantidadvendidos}">
+                        <td th:text="${cpv.getVendidos()}"></td>
+                    </tr>
+                    </tbody>
+                </table><br>
+
+                <table class="table">
+
+                    <thead>
+                    <tr>
+                        <th>Producto mas vendido</th>
+                        <th>Total de unidades vendidas</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cv : ${masvendido}">
+                        <td th:text="${cv.getNombre()}"></td>
+                        <td th:text="${cv.getVendidos()}"></td>
+                    </tr>
+                    </tbody>
+                </table><br>
+
+                <table class="table">
+                    <thead>
+                    <tr><th>Producto menos vendido</th>
+                        <th>Total de unidades vendidas</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="mv : ${menosvendido}">
+                        <td th:text="${mv.getNombre()}"></td>
+                        <td th:text="${mv.getVendidos()}"></td>
+                    </tr>
+                    </tbody>
+                </table><br>
+
+                <table class="table">
+                    <thead>
+                    <tr><th>Usuario que más ha gastado</th>
+                        <th>Gasto total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="mg : ${masgastalon}">
+                        <td th:text="${mg.getNombre()}"></td>
+                        <td th:text="${mg.getGasto()}"></td>
+                    </tr>
+                    </tbody>
+                </table><br>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<div th:replace="fragmentos/Fragmentos.html::Script"></div>
+</body>
+</html>

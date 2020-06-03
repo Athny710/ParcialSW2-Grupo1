@@ -1,14 +1,15 @@
 package com.example.parcialsw2.Controller;
 
 import com.example.parcialsw2.entity.Usuario;
+import com.example.parcialsw2.repository.UsuarioRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.UUID;
 import com.example.parcialsw2.entity.Producto;
 import com.example.parcialsw2.repository.ProductoRepository;
@@ -20,19 +21,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.Optional;
 
 @Controller
 public class HomeController {
     @Autowired
     ProductoRepository productoRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @GetMapping(value = {"","/list"})
     public String index(Model model){
         model.addAttribute("lista", productoRepository.findAll());
         return "index2";
 
+    }
+    @GetMapping("/vermas")
+    public String vermas(@RequestParam("id") int id){
+        return "system/detalles";
     }
 
     @GetMapping("/image/{id}")
@@ -50,10 +57,27 @@ public class HomeController {
     }
 
     @GetMapping("registrarse")
-    public String registrarse(){
-
+    public String registrarse(@ModelAttribute("usuario") Usuario u){
         return "system/Registrarse";
     }
+
+    @PostMapping("/registrar")
+    public String registrar(@ModelAttribute("usuario") @Valid Usuario u, BindingResult bindingResult,
+                            @RequestParam("cont2") String cont2,
+                            @RequestParam("cont1") String cont1){
+        if(bindingResult.hasErrors()){
+            return "redirect:/registrarse";
+        }else{
+            if(!cont2.equals(cont1)){
+                return "redirect:/registrarse";
+            }else {
+
+            }
+        }
+
+        return "";
+    }
+
     @GetMapping("recuperar")
     public String recuperarContra(){
 
