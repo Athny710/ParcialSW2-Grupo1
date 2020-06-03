@@ -67,7 +67,7 @@ public class HomeController {
             if(!cont2.equals(cont1)){
                 return "redirect:/registrarse";
             }else {
-                usua
+              
             }
         }
 

@@ -53,30 +53,48 @@ public class RegistradoController {
         if(opt.isPresent()){
             Producto p = opt.get();
             Usuario usuario = (Usuario) session.getAttribute("user");
-            List<ProductoSel> seleccionado = prodSelRepository.findByProductoAndAndUsuario(p,usuario);
+            List<ProductoSel> seleccionado = prodSelRepository.findByCarrito(p.getIdproducto(),usuario.getIdusuarios());
             if(seleccionado.isEmpty()){
                 ProductoSel productoSel= new ProductoSel();
                 productoSel.setUsuario(usuario);
                 productoSel.setProducto(p);
                 productoSel.setCantidad(1);
+                productoSel.setComprado(0);
                 attr.addFlashAttribute("msg","Se agregó correctamente");
+                int cantidadCarrito = (int) session.getAttribute("numeroCarrito");
+                cantidadCarrito = cantidadCarrito +1;
+                session.setAttribute("numeroCarrito", cantidadCarrito);
+
                 prodSelRepository.save(productoSel);
             }else{
-                ProductoSel pro =seleccionado.get(0);
-                int cantidad = 1+ pro.getCantidad();
-                if(cantidad >= 4){
-                    attr.addFlashAttribute("msg1","Solo se permiten 4 unidades por producto");
-                    return "redirect:/list";
-                }else{
-                    pro.setCantidad(cantidad);
-                    attr.addFlashAttribute("msg","Se agregó correctamente");
+                for (ProductoSel pro : seleccionado) {
+                   if(pro.getProducto().getIdproducto() == p.getIdproducto()) {
+                       int cantidad = 1 + pro.getCantidad();
+                       if (cantidad > 4) {
+                           attr.addFlashAttribute("msg1", "Solo se permiten 4 unidades por producto");
+                           return "redirect:/list";
+                       } else {
+                           pro.setCantidad(cantidad);
+                           prodSelRepository.save(pro);
+                           int cantidadCarrito = (int) session.getAttribute("numeroCarrito");
+                           cantidadCarrito = cantidadCarrito +1;
+                           session.setAttribute("numeroCarrito", cantidadCarrito);
+                           attr.addFlashAttribute("msg", "Se agregó correctamente");
+                           break;
+                       }
+                   }
                 }
-
             }
             return "redirect:/list";
         }else{
             return "redirect:/list";
         }
+    }
+
+    @GetMapping("/verCarrito")
+    public String verCarrito(Model model){
+        model.addAttribute("lista",prodSelRepository.findAll());
+        return "registrado/carrito";
     }
 
     @GetMapping("/vistacheck")
@@ -129,5 +147,7 @@ public class RegistradoController {
             return false;
         }
     }
+
+
 
 }
