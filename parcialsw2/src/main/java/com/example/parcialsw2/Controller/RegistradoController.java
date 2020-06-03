@@ -132,6 +132,8 @@ public class RegistradoController {
                     prodSelRepository.save(pro);
                 }
                 attr.addFlashAttribute("msg2", "Compra realizada exitosamente con tarjeta VISA");
+                int cantidadCarrito = 0;
+                session.setAttribute("numeroCarrito", cantidadCarrito);
                 return "redirect:/registrado";
             }else if (getCCType(num).equals("MASTER")) {
                 attr.addFlashAttribute("msg2", "Compra realizada exitosamente con tarjeta MASTERCARD");
