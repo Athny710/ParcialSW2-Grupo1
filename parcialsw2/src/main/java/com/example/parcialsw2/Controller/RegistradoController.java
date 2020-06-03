@@ -150,7 +150,9 @@ public class RegistradoController {
         System.out.println(suma);
         if(10-(suma%10)==ultimo){
             return true;
-        }else {
+        }else if(suma%10==ultimo){
+            return true;
+        }else{
             return false;
         }
     }
