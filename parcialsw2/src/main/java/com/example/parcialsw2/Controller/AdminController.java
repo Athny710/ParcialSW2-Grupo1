@@ -30,7 +30,7 @@ public class AdminController {
     @GetMapping("/principal")
     public String paginaInicio(Model model){
         model.addAttribute("lista", productoRepository.findAll());
-        return "index";
+        return "index2";
     }
 
     @GetMapping(value = {"listaGestores","","/"})

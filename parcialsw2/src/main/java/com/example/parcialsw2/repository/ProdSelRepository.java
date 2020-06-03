@@ -1,13 +1,17 @@
 package com.example.parcialsw2.repository;
 
+
 import com.example.parcialsw2.DTO.*;
+import com.example.parcialsw2.entity.Producto;
 import com.example.parcialsw2.entity.ProductoSel;
+import com.example.parcialsw2.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface ProdSelRepository extends JpaRepository<ProductoSel, Integer> {
+
     @Query(value="SELECT count(ps.codigo) as cantidad FROM ex1.producto_seleccionado ps, ex1.usuarios us\n" +
             "where us.rol = 'registrado'", nativeQuery=true)
     List<CantidadCompras> obtenerCantidadCompras();
@@ -42,4 +46,12 @@ public interface ProdSelRepository extends JpaRepository<ProductoSel, Integer> {
             "WHERE ps.idusuarios = us.idusuarios and ps.idproducto = pr.idproducto and ps.comprado = '1'", nativeQuery = true)
     List<UsuarioDerrochador> obtenerUsuarioDerrochador();
 
+
+    @Query(value = " SELECT * FROM ex1.producto_seleccionado \n" +
+            "where idproducto = ?1 and comprado ='0' and idusuarios = ?2 ", nativeQuery = true)
+    List<ProductoSel> findByCarrito(int pro, int usu);
+
+    @Query(value = "SELECT * FROM ex1.producto_seleccionado\n" +
+            "where idusuarios = ?1 and comprado ='0'", nativeQuery = true)
+    List<ProductoSel> NumeroCarrito(int u);
 }

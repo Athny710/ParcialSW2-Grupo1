@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:replace="fragmentos/Fragmentos.html::cabecera(titulo='Página Principal')">
+</head>
+<body>
+<div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column bg-white">
+        <!-- Main Content -->
+        <div id="content">
+            <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
+            <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="d-flex col-lg-12">
+                    <div class="col-lg-4"></div>
+                    <form class="form-inline mr-auto w-100 navbar-search center">
+                        <div class="input-group col-lg-5">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn bg-Projo" type="button">
+                                    <i class="fas fa-search fa-sm text-white"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br><br>
+                <div class="col-lg-4">
+                    <a class="btn btn-celeste btn-user btn-block" th:href="@{/registrado/vistacheck}">Proceder a Comprar</a>
+                </div>
+                <div class="row" th:each="x:${lista}">
+                    <div class="col-lg-6" >
+                        <div class="d-flex">
+                            <div class="col-lg-1"></div>
+                            <!-- Basic Card Example -->
+                            <div class="card shadow mb-4 col-lg-10">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="col-lg-6">
+                                            <br>
+                                            <img th:src="@{|image/${x.producto.idproducto}|}" width="135px" height="135px">
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <div class="row">
+                                                <p>Código:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${x.producto.nombre}"></p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Nombre:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${x.producto.nombre}"></p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Precio:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${x.producto.precio}"></p>
+                                            </div>
+                                            <div class="row">
+                                                <p>Cantidad:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${x.cantidad}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<div th:replace="fragmentos/Fragmentos.html::Script"></div>
+</body>
+</html>
