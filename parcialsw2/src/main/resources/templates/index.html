@@ -62,15 +62,15 @@
                                             <a href="#">+Ver más</a>
                                             <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                                <a  th:href="@{'/registrado/carrito' + '?id=' + ${lista[i.index+i.index].idproducto}}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
                                             <div sec:authorize="isAnonymous()" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                                <a th:href="@{/}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
                                             <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
+                                                <a th:href="@{'/gestor/editar' + '?id=' + ${lista[i.index+i.index].idproducto}}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
@@ -114,15 +114,15 @@
                                             <a href="#">+Ver más</a>
                                             <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                                <a th:href="@{'/registrado/carrito' + '?id=' + ${lista[i.index+i.index+1].idproducto}}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
                                             <div sec:authorize="isAnonymous()" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a href="#" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                                <a th:href="@{/}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
                                             <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
                                                 <div class="col-lg-2"></div>
-                                                <a th:href="@{'/gestor/editar' + '?id=' + ${x.idproducto}}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
+                                                <a th:href="@{'/gestor/editar' + '?id=' + ${lista[i.index+i.index+1].idproducto}}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
                                             </div>
                                         </div>
                                     </div>
