@@ -159,7 +159,9 @@ public class HomeController {
         u.setActivo(1);
         u.setRol("registrado");
         usuRepository.guardarUsuario(u.getIdusuarios(), u.getNombre(), u.getApellido(),
-                                    u.getDni(), u.getCorreo(), u.getContrasenha(), u.getRol(), u.getActivo());
+                                    u.getDni(), u.getCorreo(),
+                                    new BCryptPasswordEncoder().encode(u.getContrasenha()),
+                                    u.getRol(), u.getActivo());
 
         return "iniciarSesion";
     }
