@@ -44,8 +44,11 @@ public interface ProdSelRepository extends JpaRepository<ProductoSel, Integer> {
             "LIMIT 1", nativeQuery = true)
     List<MenosVendido> obtenerProductoMenosVendido();
 
-    @Query(value = "SELECT us.nombre AS nombre,sum(pr.precio) as gasto FROM ex1.usuarios us, ex1.producto pr, ex1.producto_seleccionado ps\n" +
-            "WHERE ps.idusuarios = us.idusuarios and ps.idproducto = pr.idproducto and ps.comprado = '1'", nativeQuery = true)
+    @Query(value = "SELECT us.nombre as nombre, sum(ps.preciototal) as gasto FROM ex1.producto_seleccionado ps, ex1.usuarios us\n" +
+            "where ps.comprado = 1 and ps.idusuarios = us.idusuarios\n" +
+            "group by ps.idusuarios\n" +
+            "order by sum(ps.preciototal) desc\n" +
+            "limit 1", nativeQuery = true)
     List<UsuarioDerrochador> obtenerUsuarioDerrochador();
 
 

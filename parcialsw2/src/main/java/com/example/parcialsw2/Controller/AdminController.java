@@ -160,7 +160,7 @@ public class AdminController {
             usuarioRepository.deleteById(id);
             attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
         }
-        return "redirect:/listaGestores";
+        return "redirect:/admin/listaGestores";
     }
 
 }
