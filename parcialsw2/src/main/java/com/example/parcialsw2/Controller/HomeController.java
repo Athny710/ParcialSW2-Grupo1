@@ -2,12 +2,18 @@ package com.example.parcialsw2.Controller;
 
 import com.example.parcialsw2.entity.Usuario;
 import com.example.parcialsw2.repository.UsuarioRepository;
+import com.example.parcialsw2.service.Email;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -27,42 +33,36 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.Optional;
 
 @Controller
+@Service
 public class HomeController {
     @Autowired
     ProductoRepository productoRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    private JavaMailSender sender;
 
-
-    private EntityManagerFactory emf;
-    public void init(){
-        emf = Persistence.createEntityManagerFactory("my-persistence-unit");
-    }
-    public void close(){
-        emf.close();
-    }
-    @PostMapping("/registrar")
-    public String guardar(@ModelAttribute("usuario") Usuario u){
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        StoredProcedureQuery query =em.createStoredProcedureQuery("guardar");
-        query.setParameter("id", u.getIdusuarios());
-        query.setParameter("nombre", u.getNombre());
-        query.setParameter("apellido", u.getApellido());
-        query.setParameter("dni", u.getDni());
-        query.setParameter("contrasenha", u.getContrasenha());
-        query.setParameter("rol", u.getRol());
-        query.setParameter("activo", u.getActivo());
-        query.execute();
-        em.getTransaction().commit();
-        em.close();
-
-        return "redirect:/list";
+    @RequestMapping("/enviarCorreo")
+    @ResponseBody
+    String home() {
+        try {
+            sendEmail();
+            return "Email Sent!";
+        }catch(Exception ex) {
+            return "Error in sending email: "+ex;
+        }
     }
 
+    private void sendEmail() throws Exception{
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
 
+        helper.setTo("mionks27@gmailcom");
+        helper.setText("How are you?");
+        helper.setSubject("Hi");
 
-
+        sender.send(message);
+    }
 
 
 
@@ -113,24 +113,27 @@ public class HomeController {
     }
 
 
-    public String registrar(@ModelAttribute("usuario") @Valid Usuario u, BindingResult bindingResult,
-                            @RequestParam("cont2") String cont2,
-                            @RequestParam("cont1") String cont1){
-        if(bindingResult.hasErrors()){
-            return "redirect:/registrarse";
-        }else{
 
-
-            return "redirect:/list";
-        }
-
-
-    }
 
     @GetMapping("recuperar")
     public String recuperarContra(){
-
         return "system/RecuperarCont";
+    }
+
+
+
+
+
+    @Autowired
+    private Email email;
+
+    @PostMapping("/")
+    public String sendEmail(@RequestParam("correo") String correo, Model model) {
+
+        String subject="Recuperacion de contraseña";
+        String content="Funcionaaaaa!!";
+        email.sendMail(correo, subject, content);
+        return "redirec:/recuperar";
     }
 
     @PostMapping("/processLogin")
