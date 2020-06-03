@@ -1,15 +1,32 @@
 package com.example.parcialsw2.Controller;
 
 import com.example.parcialsw2.entity.Usuario;
+import com.example.parcialsw2.repository.PaginationRepository;
 import com.example.parcialsw2.repository.UsuarioRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import com.example.parcialsw2.service.Email;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import javax.servlet.http.HttpServletRequest;
+
+import javax.mail.internet.MimeMessage;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.StoredProcedureQuery;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import com.example.parcialsw2.entity.Producto;
 import com.example.parcialsw2.repository.ProductoRepository;
@@ -18,25 +35,80 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
 
 @Controller
+@Service
 public class HomeController {
     @Autowired
     ProductoRepository productoRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    PaginationRepository paginationRepository;
+    private JavaMailSender sender;
+
+    @RequestMapping("/enviarCorreo")
+    @ResponseBody
+    String home() {
+        try {
+            sendEmail();
+            return "Email Sent!";
+        }catch(Exception ex) {
+            return "Error in sending email: "+ex;
+        }
+    }
+
+    private void sendEmail() throws Exception{
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setTo("mionks27@gmailcom");
+        helper.setText("How are you?");
+        helper.setSubject("Hi");
+
+        sender.send(message);
+    }
 
     @GetMapping(value = {"","/list"})
-    public String index(Model model){
-        model.addAttribute("lista", productoRepository.findAll());
-        return "index2";
+    public String index(Model model, @RequestParam(defaultValue = "0") int page){
+        if(page <= 0){
+            Pageable pageable = PageRequest.of(page,7);
+            Page<Producto> lista1 = paginationRepository.findAll(pageable);
+            int totalPages = lista1.getTotalPages();
+            List<Integer> paginas = new ArrayList<>();
+
+            for(int i=1; i<=totalPages; i++){
+                paginas.add(i);
+            }
+
+            List<Producto> lista = lista1.getContent();
+            model.addAttribute("page",page);
+            model.addAttribute("lista",lista);
+            model.addAttribute("paginas",paginas);
+            return "index2";
+        }else{
+            Pageable pageable = PageRequest.of(page -1,7);
+            Page<Producto> lista1 = paginationRepository.findAll(pageable);
+            int totalPages = lista1.getTotalPages();
+            List<Integer> paginas = new ArrayList<>();
+
+            for(int i=1; i<=totalPages; i++){
+                paginas.add(i);
+            }
+
+            List<Producto> lista = lista1.getContent();
+            model.addAttribute("page",page);
+            model.addAttribute("lista",lista);
+            model.addAttribute("paginas",paginas);
+            return "index2";
+        }
 
     }
+
+
     @GetMapping("/vermas")
     public String vermas(@RequestParam("id") int id, Model model, HttpSession session){
         Optional<Producto> opt = productoRepository.findById(id);
@@ -73,27 +145,28 @@ public class HomeController {
         return "system/Registrarse";
     }
 
-    @PostMapping("/registrar")
-    public String registrar(@ModelAttribute("usuario") @Valid Usuario u, BindingResult bindingResult,
-                            @RequestParam("cont2") String cont2,
-                            @RequestParam("cont1") String cont1){
-        if(bindingResult.hasErrors()){
-            return "redirect:/registrarse";
-        }else{
-            if(!cont2.equals(cont1)){
-                return "redirect:/registrarse";
-            }else {
 
-            }
-        }
 
-        return "";
-    }
 
     @GetMapping("recuperar")
     public String recuperarContra(){
-
         return "system/RecuperarCont";
+    }
+
+
+
+
+
+    @Autowired
+    private Email email;
+
+    @PostMapping("/")
+    public String sendEmail(@RequestParam("correo") String correo, Model model) {
+
+        String subject="Recuperacion de contraseña";
+        String content="Funcionaaaaa!!";
+        email.sendMail(correo, subject, content);
+        return "redirec:/recuperar";
     }
 
     @PostMapping("/processLogin")

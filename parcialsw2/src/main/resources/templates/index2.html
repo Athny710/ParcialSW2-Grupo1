@@ -25,6 +25,10 @@
                         </div>
                     </form>
                 </div>
+                <br>
+                <span th:each="numero : ${paginas}">
+                <a th:href="@{'/list' + '?page='+ ${numero}}" th:text="${numero}"></a>
+                </span>
                 <br><br>
                 <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
                 <div th:if="${msg2 != null}" th:text="${msg2}" class="alert alert-success" role="alert"></div>
@@ -44,7 +48,7 @@
                                     <div class="d-flex">
                                         <div class="col-lg-6">
                                             <br>
-                                            <img th:src="@{|image/${x.idproducto}|}" width="135px" height="135px">
+                                            <img th:src="@{|image/${lista[i.index+i.index].idproducto}|}" width="135px" height="135px">
                                         </div>
                                         <div class="col-lg-10">
                                             <div class="row">
@@ -76,9 +80,10 @@
                                                 <div class="col-lg-2"></div>
                                                 <a th:href="@{/loginForm}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
-                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                            <div sec:authorize="hasAnyAuthority('gestor')" >
                                                 <div class="col-lg-2"></div>
                                                 <a th:href="@{'/gestor/editar' + '?id=' + ${lista[i.index+i.index].idproducto}}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
+                                                <a th:href="@{'/gestor/eliminar' + '?id=' + ${lista[i.index+i.index].idproducto}}"  style="width: 160px" class="btn btn-danger btn-user btn-block">Eliminar Producto</a>
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +101,7 @@
                                     <div class="d-flex">
                                         <div class="col-lg-6">
                                             <br>
-                                            <img th:src="@{|image/${x.idproducto}|}" width="135px" height="135px">
+                                            <img th:src="@{|image/${lista[i.index+i.index+1].idproducto}|}" width="135px" height="135px">
                                         </div>
                                         <div class="col-lg-10">
                                             <div class="row">
@@ -128,9 +133,11 @@
                                                 <div class="col-lg-2"></div>
                                                 <a th:href="@{/}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
-                                            <div sec:authorize="hasAnyAuthority('gestor')" class="d-flex">
+                                            <div sec:authorize="hasAnyAuthority('gestor')" >
                                                 <div class="col-lg-2"></div>
                                                 <a th:href="@{'/gestor/editar' + '?id=' + ${lista[i.index+i.index+1].idproducto}}" style="width: 160px" class="btn btn-celeste btn-user btn-block">Editar Producto</a>
+                                                <br>
+                                                <a th:href="@{'/gestor/eliminar' + '?id=' + ${lista[i.index+i.index+1].idproducto}}" style="width: 160px" class="btn btn-danger btn-user btn-block">Eliminar Producto</a>
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +147,10 @@
                         </div>
                     </div>
                 </div>
+
             </div>
+
+
         </div>
     </div>
 </div>
