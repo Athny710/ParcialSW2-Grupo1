@@ -6,9 +6,13 @@
 <body>
 
 
-<div class="container" id="contenido">
+<div id="wrapper">
+<div id="content-wrapper" class="d-flex flex-column bg-white">
+    <!-- Main Content -->
+    <div id="content">
     <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
     <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
+        <div class="container" id="contenido">
     <h1>Lista de Gestores</h1>
     <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
     <table class="table">
@@ -36,6 +40,9 @@
         </tr>
         </tbody>
     </table>
+</div>
+    </div>
+</div>
 </div>
 <div th:replace="fragmentos/Fragmentos.html::Script"></div>
 </body>
