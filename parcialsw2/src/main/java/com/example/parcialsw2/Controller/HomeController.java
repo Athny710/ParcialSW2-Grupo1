@@ -37,6 +37,10 @@ public class HomeController {
         return "index2";
 
     }
+    @GetMapping("/vermas")
+    public String vermas(@RequestParam("id") int id){
+        return "system/detalles";
+    }
 
     @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> mostrarImagen(@PathVariable("id") int id){
@@ -67,7 +71,7 @@ public class HomeController {
             if(!cont2.equals(cont1)){
                 return "redirect:/registrarse";
             }else {
-              
+
             }
         }
 

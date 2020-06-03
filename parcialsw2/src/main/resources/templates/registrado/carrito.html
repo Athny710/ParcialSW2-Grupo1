@@ -12,24 +12,19 @@
             <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
             <div class="container-fluid">
                 <!-- Page Heading -->
+                <hr style="width: 220px">
                 <div class="d-flex col-lg-12">
-                    <div class="col-lg-4"></div>
-                    <form class="form-inline mr-auto w-100 navbar-search center">
-                        <div class="input-group col-lg-5">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn bg-Projo" type="button">
-                                    <i class="fas fa-search fa-sm text-white"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="col-lg-5"></div>
+                    <div class="col-lg-2">
+                        <p th:text="|Precio Final:  ${precioFinal}|"></p>
+                        <br>
+                        <br>
+                        <a class="btn btn-celeste btn-user btn-block" th:href="@{/registrado/vistacheck}">Proceder a Comprar</a>
+                    </div>
                 </div>
-                <br><br>
-                <div class="col-lg-4">
-                    <a class="btn btn-celeste btn-user btn-block" th:href="@{/registrado/vistacheck}">Proceder a Comprar</a>
-                </div>
-                <div class="row" th:each="x:${lista}">
+                <hr style="width: 220px"><br>
+                <div class="d-flex" th:each="x:${lista}">
+                    <div class="col-lg-3"></div>
                     <div class="col-lg-6" >
                         <div class="d-flex">
                             <div class="col-lg-1"></div>
@@ -62,6 +57,16 @@
                                                 <div class="col-lg-1"></div>
                                                 <p th:text="${x.cantidad}"></p>
                                             </div>
+                                            <div class="row">
+                                                <p>SubTotal:</p>
+                                                <div class="col-lg-1"></div>
+                                                <p th:text="${x.cantidad} * ${x.producto.precio}"></p>
+                                            </div>
+                                            <br>
+                                            <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
+                                                <div class="col-lg-2"></div>
+                                                <a  th:href="@{'/registrado/quitarCarrito' + '?id=' + ${x.idproductoseleccionado}}" style="width: 160px" class="btn btn-danger btn-user btn-block">Quitar de Carrito</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -70,6 +75,7 @@
                         </div>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
     </div>

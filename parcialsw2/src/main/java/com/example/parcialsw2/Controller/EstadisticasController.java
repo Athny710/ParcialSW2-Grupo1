@@ -25,6 +25,6 @@ public class EstadisticasController {
         model.addAttribute("menosvendido",prodSelRepository.obtenerProductoMenosVendido());
         model.addAttribute("masgastalon",prodSelRepository.obtenerUsuarioDerrochador());
 
-        return "gestor/estadisticas";
+        return "Gestor/estadisticas";
     }
 }
