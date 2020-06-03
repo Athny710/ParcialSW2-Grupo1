@@ -2,9 +2,13 @@ package com.example.parcialsw2.Controller;
 
 import com.example.parcialsw2.entity.Producto;
 import com.example.parcialsw2.entity.Usuario;
+import com.example.parcialsw2.repository.PaginationRepository;
 import com.example.parcialsw2.repository.ProductoRepository;
 import com.example.parcialsw2.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -27,11 +33,43 @@ public class GestorController {
     UsuarioRepository usuarioRepository;
     @Autowired
     ProductoRepository productoRepository;
+    @Autowired
+    PaginationRepository paginationRepository;
 
     @GetMapping(value = {"","/list"})
-    public String paginaInicio(Model model){
-        model.addAttribute("lista", productoRepository.findAll());
-        return "index";
+    public String index(Model model, @RequestParam(defaultValue = "0") int page){
+        if(page <= 0){
+            Pageable pageable = PageRequest.of(page,7);
+            Page<Producto> lista1 = paginationRepository.findAll(pageable);
+            int totalPages = lista1.getTotalPages();
+            List<Integer> paginas = new ArrayList<>();
+
+            for(int i=1; i<=totalPages; i++){
+                paginas.add(i);
+            }
+
+            List<Producto> lista = lista1.getContent();
+            model.addAttribute("page",page);
+            model.addAttribute("lista",lista);
+            model.addAttribute("paginas",paginas);
+            return "index";
+        }else{
+            Pageable pageable = PageRequest.of(page -1,7);
+            Page<Producto> lista1 = paginationRepository.findAll(pageable);
+            int totalPages = lista1.getTotalPages();
+            List<Integer> paginas = new ArrayList<>();
+
+            for(int i=1; i<=totalPages; i++){
+                paginas.add(i);
+            }
+
+            List<Producto> lista = lista1.getContent();
+            model.addAttribute("page",page);
+            model.addAttribute("lista",lista);
+            model.addAttribute("paginas",paginas);
+            return "index";
+        }
+
     }
 
     @GetMapping("/image/{id}")

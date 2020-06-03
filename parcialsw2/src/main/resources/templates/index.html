@@ -25,6 +25,10 @@
                         </div>
                     </form>
                 </div>
+                  <br>
+                  <span th:each="numero : ${paginas}">
+                <a th:href="@{'/list' + '?page='+ ${numero}}" th:text="${numero}"></a>
+                </span>
                 <br><br>
                   <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"> </div>
                   <div th:if="${msg1 != null}" th:text="${msg1}" class="alert alert-danger" role="alert"></div>
@@ -41,7 +45,7 @@
                                     <div class="d-flex">
                                         <div class="col-lg-6">
                                             <br>
-                                            <img th:src="@{|${session.user.rol}/image/${x.idproducto}|}" width="135px" height="135px">
+                                            <img th:src="@{|image/${x.idproducto}|}" width="135px" height="135px">
                                         </div>
                                         <div class="col-lg-10">
                                             <div class="row">
@@ -93,7 +97,7 @@
                                     <div class="d-flex">
                                         <div class="col-lg-6">
                                             <br>
-                                            <img th:src="@{|${session.user.rol}/image/${x.idproducto}|}" width="135px" height="135px">
+                                            <img th:src="@{|image/${x.idproducto}|}" width="135px" height="135px">
                                         </div>
                                         <div class="col-lg-10">
                                             <div class="row">

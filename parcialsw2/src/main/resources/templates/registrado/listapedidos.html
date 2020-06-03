@@ -8,7 +8,12 @@
     <div th:insert="fragmentos/Fragmentos.html::TopBar"></div>
     <div th:if="${session.user} != null" th:insert="fragmentos/Fragmentos.html::LogOut"></div>
     <h1>Lista de pedidos</h1><br><br>
-    <table class="table" th:each="lista,i : ${listas}">
+    <div th:if="${listas.isEmpty() == true}" class=" col-lg-4" >
+            <h1> Todavía no ha realizado pedidos</h1>
+            <br>
+            <a class="btn btn-danger btn-user btn-block" th:href="@{/list}">Regresar</a>
+    </div>
+    <table th:if="${listas.isEmpty() == false}" class="table" th:each="lista,i : ${listas}">
         <h5 th:text="${'Pedido ' + (i.index + 1)}"></h5>
         <thead>
         <tr>

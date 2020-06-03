@@ -5,9 +5,13 @@ import com.example.parcialsw2.DTO.ProductosxCodigo;
 import com.example.parcialsw2.entity.Producto;
 import com.example.parcialsw2.entity.ProductoSel;
 import com.example.parcialsw2.entity.Usuario;
+import com.example.parcialsw2.repository.PaginationRepository;
 import com.example.parcialsw2.repository.ProdSelRepository;
 import com.example.parcialsw2.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,11 +32,43 @@ public class RegistradoController {
     ProductoRepository productoRepository;
     @Autowired
     ProdSelRepository prodSelRepository;
+    @Autowired
+    PaginationRepository paginationRepository;
 
     @GetMapping(value = {"","/list"})
-    public String paginaInicio(Model model){
-        model.addAttribute("lista", productoRepository.findAll());
-        return "index";
+    public String index(Model model, @RequestParam(defaultValue = "0") int page){
+        if(page <= 0){
+            Pageable pageable = PageRequest.of(page,7);
+            Page<Producto> lista1 = paginationRepository.findAll(pageable);
+            int totalPages = lista1.getTotalPages();
+            List<Integer> paginas = new ArrayList<>();
+
+            for(int i=1; i<=totalPages; i++){
+                paginas.add(i);
+            }
+
+            List<Producto> lista = lista1.getContent();
+            model.addAttribute("page",page);
+            model.addAttribute("lista",lista);
+            model.addAttribute("paginas",paginas);
+            return "index";
+        }else{
+            Pageable pageable = PageRequest.of(page -1,7);
+            Page<Producto> lista1 = paginationRepository.findAll(pageable);
+            int totalPages = lista1.getTotalPages();
+            List<Integer> paginas = new ArrayList<>();
+
+            for(int i=1; i<=totalPages; i++){
+                paginas.add(i);
+            }
+
+            List<Producto> lista = lista1.getContent();
+            model.addAttribute("page",page);
+            model.addAttribute("lista",lista);
+            model.addAttribute("paginas",paginas);
+            return "index";
+        }
+
     }
 
     @GetMapping("/image/{id}")
