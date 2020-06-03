@@ -13,8 +13,9 @@ import java.util.List;
 public interface ProdSelRepository extends JpaRepository<ProductoSel, Integer> {
 
 
-    @Query(value="SELECT count(ps.codigo) as cantidad FROM ex1.producto_seleccionado ps, ex1.usuarios us\n" +
-            "where us.rol = 'registrado'", nativeQuery=true)
+    @Query(value="SELECT count(ps.idproductoseleccionado) as cantidad FROM ex1.producto_seleccionado ps, ex1.usuarios us\n" +
+            "where us.rol = 'registrado'\n" +
+            "group by ps.codigo", nativeQuery=true)
     List<CantidadCompras> obtenerCantidadCompras();
 
     @Query(value = "SELECT DISTINCT(nombre) as caro FROM ex1.producto_seleccionado ps, ex1.producto prod\n" +
@@ -55,4 +56,13 @@ public interface ProdSelRepository extends JpaRepository<ProductoSel, Integer> {
     @Query(value = "SELECT * FROM ex1.producto_seleccionado\n" +
             "where idusuarios = ?1 and comprado ='0'", nativeQuery = true)
     List<ProductoSel> NumeroCarrito(int u);
+
+    @Query(value = "SELECT * FROM ex1.producto_seleccionado ps\n" +
+            "WHERE ps.idusuarios = ?1 AND ps.comprado = '1'\n" +
+            "GROUP BY ps.codigo",nativeQuery = true)
+    List<ProductoSel> obtenerCodigos(int id);
+
+    @Query(value = "SELECT pr.nombre AS nombre, ps.codigo AS codigo, ps.cantidad AS cantidad, pr.precio AS precio, ps.preciototal AS pretoto, ps.fecha AS fechita FROM ex1.producto_seleccionado ps, ex1.producto pr\n" +
+            "WHERE ps.codigo=?1 AND ps.idproducto = pr.idproducto", nativeQuery = true)
+    List<ProductosxCodigo> obtenerProductosXCodigo(String code);
 }
