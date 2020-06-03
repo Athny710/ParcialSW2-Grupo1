@@ -38,9 +38,15 @@ public class HomeController {
 
     }
     @GetMapping("/vermas")
-    public String vermas(@RequestParam("id") int id, Model model){
+    public String vermas(@RequestParam("id") int id, Model model, HttpSession session){
         Optional<Producto> opt = productoRepository.findById(id);
         if(opt.isPresent()){
+            Usuario usuario = (Usuario) session.getAttribute("user");
+            if (usuario == null){
+                model.addAttribute("producto", opt.get());
+                return "system/Detalles2";
+
+            }
             model.addAttribute("producto", opt.get());
             return "system/Detalles";
         }else{

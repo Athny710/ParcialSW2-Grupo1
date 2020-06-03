@@ -22,11 +22,8 @@
                         <hr>
                         <br>
                         <div class="d-flex">
-                            <div sec:authorize="hasAnyAuthority( 'registrado','gestor', 'admin')"  class="col-lg-6">
-                                <img th:src="@{|${session.user.rol}/image/${producto.idproducto}|}" width="160px" height="160px">
-                            </div>
-                            <div sec:authorize="isAnonymous()"  class="col-lg-6">
-                                <img th:src="@{|${session.user.rol}/image/${producto.idproducto}|}" width="160px" height="160px">
+                            <div   class="col-lg-6">
+                                <img th:src="@{|image/${producto.idproducto}|}" width="160px" height="160px">
                             </div>
                             <div class="col-lg-10">
                                 <div class="row">

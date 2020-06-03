@@ -22,6 +22,10 @@
                         <a class="btn btn-celeste btn-user btn-block" th:href="@{/registrado/vistacheck}">Proceder a Comprar</a>
                     </div>
                 </div>
+                <br>
+                <div th:if="${msg != null}" th:text="${msg}" class="alert alert-danger" role="alert"></div>
+                <div th:if="${msg1 != null}" th:text="${msg1}" class="alert alert-danger" role="alert"></div>
+                <br>
                 <hr style="width: 220px"><br>
                 <div class="d-flex" th:each="x:${lista}">
                     <div class="col-lg-3"></div>
