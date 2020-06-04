@@ -50,33 +50,33 @@
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
         <li th:if="${session.user} == null" sec:authorize="isAnonymous()"  class="nav-item">
-            <a class="nav-link" th:href="@{/list}">Lista de productos</a>
+            <a class="nav-link text-white" th:href="@{/list}">Lista de productos</a>
         </li>
         <li  sec:authorize="hasAnyAuthority('admin')"  class="nav-item">
-            <a class="nav-link" th:href="@{/admin/principal}">Lista de productos</a>
+            <a class="nav-link text-white" th:href="@{/admin/principal}">Lista de productos</a>
         </li>
         <li  sec:authorize="hasAnyAuthority('gestor')"  class="nav-item">
-            <a class="nav-link" th:href="@{/gestor}">Lista de productos</a>
+            <a class="nav-link text-white" th:href="@{/gestor}">Lista de productos</a>
         </li>
         <li  sec:authorize="hasAnyAuthority('registrado')"  class="nav-item">
-            <a class="nav-link" th:href="@{/registrado}">Lista de productos</a>
+            <a class="nav-link text-white" th:href="@{/registrado}">Lista de productos</a>
         </li>
         <li sec:authorize="hasAnyAuthority('admin')" class="nav-item">
-            <a class="nav-link" th:href="@{/admin}">Lista de gestores</a>
+            <a class="nav-link text-white" th:href="@{/admin}">Lista de gestores</a>
         </li>
         <li sec:authorize="hasAnyAuthority('admin')" class="nav-item">
-            <a class="nav-link" th:href="@{/admin/nuevo}">Registra un gestor</a>
+            <a class="nav-link text-white" th:href="@{/admin/nuevo}">Registra un gestor</a>
         </li>
         <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item">
-            <a class="nav-link" th:href="@{/gestor/nuevo}">Registrar Producto</a>
+            <a class="nav-link text-white" th:href="@{/gestor/nuevo}">Registrar Producto</a>
         </li>
         <li sec:authorize="hasAnyAuthority('gestor')" class="nav-item">
-            <a class="nav-link" th:href="@{/estadisticas}">Estadísticas</a>
+            <a class="nav-link text-white" th:href="@{/estadisticas}">Estadísticas</a>
         </li>
 
 
         <li sec:authorize="hasAnyAuthority('registrado')" class="nav-item">
-            <a class="nav-link" th:href="@{/registrado/pedidos}">Lista de pedidos</a>
+            <a class="nav-link text-white" th:href="@{/registrado/pedidos}">Lista de pedidos</a>
         </li>
 
 
@@ -98,8 +98,8 @@
     <div th:if="${session.user} == null" sec:authorize="isAnonymous()" id="usuarioAnonimo" class="row">
         <div><a class="btn btn-info" th:href="@{/loginForm}">Iniciar Sesión</a></div>
     </div>
-    <div th:if="${session.user} != null" sec:authorize="isAuthenticated()" id="usuarioAutenticado" class="row">
-        <div><span th:text="|Bienvenido ${session.user.nombre} ${session.user.apellido} (${session.user.rol})|"></span></div>
+    <div  th:if="${session.user} != null" sec:authorize="isAuthenticated()" id="usuarioAutenticado" class="row">
+        <div style="margin-top: 0.4rem"><span class="text-white" th:text="|Bienvenido ${session.user.nombre} ${session.user.apellido} (${session.user.rol})|"></span></div>
         <div><form th:action="@{/cerrar}" method="post">
             <input class="btn btn-info" type="submit" value="Cerrar Sesión"/>
         </form></div>

@@ -56,27 +56,8 @@ public class HomeController {
     PaginationRepository paginationRepository;
     private JavaMailSender sender;
 
-    @RequestMapping("/enviarCorreo")
-    @ResponseBody
-    String home() {
-        try {
-            sendEmail();
-            return "Email Sent!";
-        }catch(Exception ex) {
-            return "Error in sending email: "+ex;
-        }
-    }
 
-    private void sendEmail() throws Exception{
-        MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setTo("mionks27@gmailcom");
-        helper.setText("How are you?");
-        helper.setSubject("Hi");
-
-        sender.send(message);
-    }
 
     @GetMapping(value = {"","/list"})
     public String index(Model model, @RequestParam(defaultValue = "0") int page){
@@ -155,15 +136,26 @@ public class HomeController {
     UsuRepository usuRepository;
 
     @PostMapping("guardarUsuario")
-    public String guardarUsuario(@ModelAttribute("usuario") Usuario u){
-        u.setActivo(1);
-        u.setRol("registrado");
-        usuRepository.guardarUsuario(u.getIdusuarios(), u.getNombre(), u.getApellido(),
-                                    u.getDni(), u.getCorreo(),
-                                    new BCryptPasswordEncoder().encode(u.getContrasenha()),
-                                    u.getRol(), u.getActivo());
+    public String guardarUsuario(@ModelAttribute("usuario")@Valid Usuario u,
+                                 BindingResult bindingResult, Model model,
+                                 @RequestParam("cont2") String cont2){
 
-        return "iniciarSesion";
+        if(bindingResult.hasErrors()){
+            return "system/Registrarse";
+        }else{
+            if(u.getContrasenha().equals(cont2)){
+                usuRepository.guardarUsuario(u.getIdusuarios(), u.getNombre(), u.getApellido(),
+                        u.getDni(), u.getCorreo(),
+                        new BCryptPasswordEncoder().encode(u.getContrasenha()),
+                        u.getRol(), u.getActivo());
+                model.addAttribute("msg", "registrado Exitósamente");
+                return "iniciarSesion";
+            }else{
+                model.addAttribute("msg", "Contraseñas diferentes");
+                return "redirect:/registrarse";
+            }
+        }
+
     }
 
 
@@ -201,20 +193,6 @@ public class HomeController {
     }
 
 
-
-
-
-    @Autowired
-    private Email email;
-
-    @PostMapping("/")
-    public String sendEmail(@RequestParam("correo") String correo, Model model) {
-
-        String subject="Recuperacion de contraseña";
-        String content="Funcionaaaaa!!";
-        email.sendMail(correo, subject, content);
-        return "redirec:/recuperar";
-    }
 
     @PostMapping("/processLogin")
     public String registrarCuenta(@RequestParam("nombre") String nombre,

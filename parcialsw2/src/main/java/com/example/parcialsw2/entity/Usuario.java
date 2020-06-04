@@ -12,15 +12,12 @@ public class Usuario implements Serializable {
     @Id
     private int idusuarios;
     @Column(nullable = false)
-    @NotBlank
-    @Size(max = 40, message = "Demasiados caracteres")
-    @Size(min = 2, message = "Pocos caracteres")
+    @Size(max = 40, message = "Máximo 40 caracteres")
+    @Size(min = 2, message = "Mínimo 2 caracteres")
     private String nombre;
-    @NotBlank
-    @Size(max = 40, message = "Demasiados caracteres")
-    @Size(min = 2, message = "Pocos caracteres")
+    @Size(max = 40, message = "Máximo 40 caracteres")
+    @Size(min = 2, message = "Mínimo 2 caracteres")
     private String apellido;
-    @NotBlank
     @Size(max = 8, message = "Deben ser 8 dígitos")
     @Size(min = 8, message = "Deben ser 8 dígitos")
     private String dni;

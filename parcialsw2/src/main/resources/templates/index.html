@@ -3,7 +3,7 @@
 >
 <head th:replace="fragmentos/Fragmentos.html::cabecera(titulo='Página Principal')">
 </head>
-<body>
+<body >
 <div id="wrapper">
     <div id="content-wrapper" class="d-flex flex-column bg-white">
         <!-- Main Content -->
@@ -18,18 +18,20 @@
                         <div class="input-group col-lg-5">
                             <input type="text" name="search" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button type="submit" class="btn bg-Projo" >
+                                <button type="submit" class="btn bg-Yellow" >
                                     <i class="fas fa-search fa-sm text-white"></i>
                                 </button>
                             </div>
                         </div>
                     </form>
-                </div>
-                  <br>
-                  <span th:each="numero : ${paginas}">
-                <a th:href="@{'/list' + '?page='+ ${numero}}" th:text="${numero}"></a>
-                </span>
-                <br><br>
+                </div><br>
+                  <div class="d-flex">
+                      <div class="col-lg-6"></div>
+                      <span style="margin-right: 1rem" th:each="numero : ${paginas}">
+                      <a th:href="@{'/list' + '?page='+ ${numero}}" th:text="${numero}"></a>
+                        </span>
+                  </div>
+                  <br><br>
                   <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"> </div>
                   <div th:if="${msg1 != null}" th:text="${msg1}" class="alert alert-danger" role="alert"></div>
                   <div th:if="${msg2 != null}" th:text="${msg2}" class="alert alert-success" role="alert"> </div>
@@ -49,33 +51,34 @@
                                         </div>
                                         <div class="col-lg-10">
                                             <div class="row">
-                                                <p>Código:</p>
+                                                <p class="col-lg-3">Código:</p>
                                                 <div class="col-lg-1"></div>
                                                 <p th:text="${lista[i.index+i.index].nombre}"></p>
                                             </div>
                                             <div class="row">
-                                                <p>Nombre:</p>
+                                                <p class="col-lg-3">Nombre:</p>
                                                 <div class="col-lg-1"></div>
                                                 <p th:text="${lista[i.index+i.index].nombre}"></p>
                                             </div>
                                             <div class="row">
-                                                <p>Precio:</p>
+                                                <p class="col-lg-3">Precio:</p>
                                                 <div class="col-lg-1"></div>
                                                 <p th:text="${lista[i.index+i.index].precio}"></p>
                                             </div>
                                             <div class="row">
-                                                <p>Stock:</p>
+                                                <p class="col-lg-3">Stock:</p>
                                                 <div class="col-lg-1"></div>
                                                 <p th:text="${lista[i.index+i.index].stock}"></p>
                                             </div>
                                             <a th:href="@{'/vermas' + '?id=' + ${lista[i.index+i.index].idproducto}}">+Ver más</a>
+                                            <br>
                                             <div sec:authorize="hasAnyAuthority('registrado')" class="d-flex">
                                                 <div class="col-lg-2"></div>
                                                 <a  th:href="@{'/registrado/carrito' + '?id=' + ${lista[i.index+i.index].idproducto}}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
                                             <div sec:authorize="isAnonymous()" class="d-flex">
-                                                <div class="col-lg-2"></div>
-                                                <a th:href="@{/loginForm}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                                <div class="col-lg-1"></div>
+                                                <a th:href="@{/}" style="width: 180px" class="btn btn-green btn-user btn-block">Agregar al Carrito <i class="fas fa-shopping-cart"></i></a>
                                             </div>
                                             <div sec:authorize="hasAnyAuthority('gestor')" >
                                                 <div class="col-lg-2"></div>
@@ -128,8 +131,8 @@
                                                 <a th:href="@{'/registrado/carrito' + '?id=' + ${lista[i.index+i.index+1].idproducto}}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
                                             </div>
                                             <div sec:authorize="isAnonymous()" class="d-flex">
-                                                <div class="col-lg-2"></div>
-                                                <a th:href="@{/}" style="width: 160px" class="btn btn-green btn-user btn-block">Agregar al Carrito</a>
+                                                <div class="col-lg-1"></div>
+                                                <a th:href="@{/}" style="width: 180px" class="btn btn-green btn-user btn-block">Agregar al Carrito <i class="fas fa-shopping-cart"></i></a>
                                             </div>
                                             <div sec:authorize="hasAnyAuthority('gestor')" >
                                                 <div class="col-lg-2"></div>

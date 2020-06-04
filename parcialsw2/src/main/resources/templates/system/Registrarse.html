@@ -40,28 +40,35 @@
                                 </div>
                                 <br>
                                 <br>
-                                <form class="user" method="post" th:action="@{/guardarUsuario}">
+                                <form class="user" method="post" th:action="@{/guardarUsuario}" th:object="${usuario}">
                                     <div class="d-flex">
                                         <div class="col-lg-6">
+                                            <input type="hidden" class="form-control form-control-user" id="rol" name="rol" aria-describedby="emailHelp" value="registrado">
+                                            <input type="hidden" class="form-control form-control-user" id="activo" name="activo" aria-describedby="emailHelp" value="1">
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user" id="nombre" name="nombre" aria-describedby="emailHelp" placeholder="Nombre">
+                                                <div class="text-danger" style="font-size: 0.7rem; text-align:center" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" ></div>
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user" id="apellido" name="apellido" aria-describedby="emailHelp" placeholder="Apellido">
+                                                <div class="text-danger" style="font-size: 0.7rem; text-align:center" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" ></div>
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user" id="dni" name="dni" aria-describedby="emailHelp" placeholder="DNI">
+                                                <div class="text-danger" style="font-size: 0.7rem; text-align:center" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" ></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-user" id="correo" name="correo" aria-describedby="emailHelp" placeholder="Correo">
+                                                <input type="email" class="form-control form-control-user" id="correo" name="correo" aria-describedby="emailHelp" placeholder="Correo">
+                                                <div class="text-danger" style="font-size: 0.7rem; text-align:center" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}" ></div>
                                             </div>
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user" id="contrasenha" name="contrasenha" aria-describedby="emailHelp" placeholder="Contraseña">
                                             </div>
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user" id="cont2" name="cont2" aria-describedby="emailHelp" placeholder="Confirmar contraseña">
+                                                <div class="text-danger" style="font-size: 0.7rem; text-align:center" th:if="${msg!=null}" th:text="${msg}" ></div>
                                             </div>
                                         </div>
                                     </div>
