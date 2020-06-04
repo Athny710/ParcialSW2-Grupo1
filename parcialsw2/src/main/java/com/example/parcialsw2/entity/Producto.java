@@ -5,7 +5,10 @@ package com.example.parcialsw2.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -14,13 +17,16 @@ public class Producto {
 
     @Id
     private int idproducto;
-    @NotBlank
+    @NotBlank(message = "No puede ser vacío")
+    @Size(max = 40, message = " máximo 40 caracteres")
     private String nombre;
+    @Size(max = 255, message = " máximo 255 caracteres")
     private String descripcion;
     private Double precio;
     private String fotonombre;
     private String fotocontenttype;
     private byte[] foto;
+    @Positive(message = "Debe ser positivo y mayor a 0 ")
     private int stock;
 
 
