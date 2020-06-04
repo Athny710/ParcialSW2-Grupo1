@@ -167,15 +167,7 @@ public class HomeController {
     public String cambiar( @RequestParam("correo") String correo, Model model){
 
         Usuario usuario = usuarioRepository.findByCorreo(correo);
-        String contrasenha = "";
-        Random rnd = new Random();
-        for (int i = 0; i < 10; i++) {
-            if(i < 2){
-                contrasenha += rnd.nextInt(10);
-            } else {
-                contrasenha += (char)(rnd.nextInt(91) + 65);
-            }
-        }
+        String contrasenha = generaContra();
 
             if(usuario!=null){
                 usuario.setContrasenha(new BCryptPasswordEncoder().encode(contrasenha));
@@ -237,5 +229,31 @@ public class HomeController {
         message.setSubject(subject);
         message.setText("Su contraseña es: "+ contra);
         javaMailSender.send(message);
+    }
+
+    public String generaContra(){
+        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String randomText = "";
+        String randomNumber = "";
+        int tamañoText = 6;
+        int tamañoNum = 2;
+        Random rand = new Random();
+        char[] text = new char[tamañoText];
+
+        for(int i=0; i<tamañoText; i++){
+            text[i] = characters.charAt(rand.nextInt(characters.length()));
+        }
+
+        for(int i=0; i<text.length; i++){
+            randomText += text[i];
+        }
+
+        for(int i=0; i< tamañoNum; i++){
+            randomNumber += rand.nextInt(10);;
+        }
+
+        String contra = randomNumber + randomText;
+
+        return contra;
     }
 }

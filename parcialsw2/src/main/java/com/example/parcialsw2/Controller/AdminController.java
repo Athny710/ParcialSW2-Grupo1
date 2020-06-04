@@ -106,15 +106,7 @@ public class AdminController {
     public String guardarGestor(@ModelAttribute("usuario") @Valid Usuario usuario,
                               BindingResult bindingResult,
                               Model model, RedirectAttributes attr){
-        String contrasenha = "";
-        Random rnd = new Random();
-        for (int i = 0; i < 10; i++) {
-            if(i < 2){
-                contrasenha += rnd.nextInt(10);
-            } else {
-                contrasenha += (char)(rnd.nextInt(91) + 65);
-            }
-        }
+        String contrasenha = generaContra();
         if(bindingResult.hasErrors()){
             model.addAttribute("msg","tiene errores");
             return "admin/formGestor";
@@ -174,6 +166,32 @@ public class AdminController {
         message.setSubject(subject);
         message.setText("Su contraseña es: "+ contra);
         javaMailSender.send(message);
+    }
+
+    public String generaContra(){
+        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String randomText = "";
+        String randomNumber = "";
+        int tamañoText = 6;
+        int tamañoNum = 2;
+        Random rand = new Random();
+        char[] text = new char[tamañoText];
+
+        for(int i=0; i<tamañoText; i++){
+            text[i] = characters.charAt(rand.nextInt(characters.length()));
+        }
+
+        for(int i=0; i<text.length; i++){
+            randomText += text[i];
+        }
+
+        for(int i=0; i< tamañoNum; i++){
+            randomNumber += rand.nextInt(10);;
+        }
+
+        String contra = randomNumber + randomText;
+
+        return contra;
     }
 
 }
