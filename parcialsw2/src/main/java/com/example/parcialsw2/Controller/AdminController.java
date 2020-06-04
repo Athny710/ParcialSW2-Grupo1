@@ -13,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +39,8 @@ public class AdminController {
     ProductoRepository productoRepository;
     @Autowired
     PaginationRepository paginationRepository;
+    @Autowired
+    public JavaMailSender javaMailSender;
 
     @GetMapping("/principal")
     public String index(Model model, @RequestParam(defaultValue = "0") int page){
@@ -122,6 +126,7 @@ public class AdminController {
                     attr.addFlashAttribute("msg", "Gestor creado exitosamente");
                     usuario.setContrasenha(contrasenha);
                     usuarioRepository.save(usuario);
+                    enviarCorreo(usuario.getCorreo(),contrasenha,"Contraseña de Gestor");
                     List<Usuario> listaUsu = usuarioRepository.findAll();
                     Usuario user = listaUsu.get(listaUsu.size() - 1);
                     usuarioRepository.guardarContra(new BCryptPasswordEncoder().encode(contrasenha),user.getIdusuarios());
@@ -161,6 +166,14 @@ public class AdminController {
             attr.addFlashAttribute("msg", "Gestor borrado exitosamente");
         }
         return "redirect:/admin/listaGestores";
+    }
+
+    public void enviarCorreo(String correo, String contra, String subject){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(correo);
+        message.setSubject(subject);
+        message.setText("Su contraseña es: "+ contra);
+        javaMailSender.send(message);
     }
 
 }

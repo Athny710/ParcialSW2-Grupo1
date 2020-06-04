@@ -129,7 +129,6 @@ public class GestorController {
                 }
 
                 try {
-
                     producto.setFoto(file.getBytes());
                     producto.setFotonombre(fileName);
                     producto.setFotocontenttype(file.getContentType());

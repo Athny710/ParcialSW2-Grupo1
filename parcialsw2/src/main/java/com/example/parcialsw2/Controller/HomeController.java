@@ -30,9 +30,8 @@ import javax.validation.Valid;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
 import com.example.parcialsw2.entity.Producto;
 import com.example.parcialsw2.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @Service
@@ -54,29 +52,8 @@ public class HomeController {
     UsuarioRepository usuarioRepository;
     @Autowired
     PaginationRepository paginationRepository;
-    private JavaMailSender sender;
-
-    @RequestMapping("/enviarCorreo")
-    @ResponseBody
-    String home() {
-        try {
-            sendEmail();
-            return "Email Sent!";
-        }catch(Exception ex) {
-            return "Error in sending email: "+ex;
-        }
-    }
-
-    private void sendEmail() throws Exception{
-        MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setTo("mionks27@gmailcom");
-        helper.setText("How are you?");
-        helper.setSubject("Hi");
-
-        sender.send(message);
-    }
+    @Autowired
+    public JavaMailSender javaMailSender;
 
     @GetMapping(value = {"","/list"})
     public String index(Model model, @RequestParam(defaultValue = "0") int page){
@@ -175,16 +152,22 @@ public class HomeController {
 
 
     @PostMapping("/cambiar")
-    public String cambiar(@RequestParam("pss1") String pss1,
-                          @RequestParam("pss2") String pss2,
-                          @RequestParam("correo") String correo, Model model){
+    public String cambiar( @RequestParam("correo") String correo, Model model){
 
         Usuario usuario = usuarioRepository.findByCorreo(correo);
-
-        if(pss1.equals(pss2)){
+        String contrasenha = "";
+        Random rnd = new Random();
+        for (int i = 0; i < 10; i++) {
+            if(i < 2){
+                contrasenha += rnd.nextInt(10);
+            } else {
+                contrasenha += (char)(rnd.nextInt(91) + 65);
+            }
+        }
 
             if(usuario!=null){
-                usuario.setContrasenha(new BCryptPasswordEncoder().encode(pss1));
+                usuario.setContrasenha(new BCryptPasswordEncoder().encode(contrasenha));
+                enviarCorreo(correo,contrasenha,"Recuperar Contraseña");
                 usuarioRepository.save(usuario);
                 model.addAttribute("msg", "Contraseña actualizada");
                 return "iniciarSesion";
@@ -193,10 +176,7 @@ public class HomeController {
                 return "iniciarSesion";
             }
 
-        }else {
-            model.addAttribute("msg", "Las contraseñas no coinciden.");
-            return "iniciarSesion";
-        }
+
 
     }
 
@@ -204,17 +184,9 @@ public class HomeController {
 
 
 
-    @Autowired
-    private Email email;
 
-    @PostMapping("/")
-    public String sendEmail(@RequestParam("correo") String correo, Model model) {
 
-        String subject="Recuperacion de contraseña";
-        String content="Funcionaaaaa!!";
-        email.sendMail(correo, subject, content);
-        return "redirec:/recuperar";
-    }
+
 
     @PostMapping("/processLogin")
     public String registrarCuenta(@RequestParam("nombre") String nombre,
@@ -252,8 +224,13 @@ public class HomeController {
             model.addAttribute("lista",productoRepository.Buscador(buscar));
             return "index2";
         }
-
-
     }
 
+    public void enviarCorreo(String correo, String contra, String subject){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(correo);
+        message.setSubject(subject);
+        message.setText("Su contraseña es: "+ contra);
+        javaMailSender.send(message);
+    }
 }
